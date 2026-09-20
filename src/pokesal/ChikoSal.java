@@ -10,5 +10,6 @@ public class ChikoSal extends Pokesal{
         setDef(6);
         setSpd(45);
         setTipo(TipoElemental.PLANTA);
+        setEnvenenado(false);
     }
 }

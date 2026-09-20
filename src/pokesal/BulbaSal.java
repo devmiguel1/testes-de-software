@@ -10,5 +10,6 @@ public class BulbaSal extends Pokesal{
         setDef(4);
         setSpd(45);
         setTipo(TipoElemental.PLANTA);
+        setEnvenenado(false);
     }
 }

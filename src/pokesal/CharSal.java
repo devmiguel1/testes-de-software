@@ -10,5 +10,6 @@ public class CharSal extends Pokesal{
         setDef(6);
         setSpd(65);
         setTipo(TipoElemental.FOGO);
+        setEnvenenado(false);
     }
 }

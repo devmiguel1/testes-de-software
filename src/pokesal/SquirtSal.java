@@ -10,5 +10,6 @@ public class SquirtSal extends Pokesal{
         setDef(4);
         setSpd(43);
         setTipo(TipoElemental.AGUA);
+        setEnvenenado(false);
     }
 }

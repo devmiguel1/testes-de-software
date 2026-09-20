@@ -10,5 +10,6 @@ public class TotoSal extends Pokesal{
         setDef(5);
         setSpd(43);
         setTipo(TipoElemental.AGUA);
+        setEnvenenado(false);
     }
 }

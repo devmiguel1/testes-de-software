@@ -10,5 +10,6 @@ public class CyndaSal extends Pokesal{
         setDef(5);
         setSpd(65);
         setTipo(TipoElemental.FOGO);
+        setEnvenenado(false);
     }
 }

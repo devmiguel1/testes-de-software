@@ -5,6 +5,7 @@ import pokesal.enums.TipoElemental;
 public abstract class Pokesal {
     private String nome;
     private double hp;
+    private double hpMax;
     private double atk;
     private double def;
     private double spd;
@@ -14,7 +15,7 @@ public abstract class Pokesal {
     private TipoElemental tipo;
     private boolean envenenado;
 
-    public void atacar(Pokesal poke){
+    public void atacar(Pokesal poke) {
         poke.setHp(poke.getHp() - atk);
     }
 
@@ -30,9 +31,13 @@ public abstract class Pokesal {
         return tipo;
     }
 
-    public String getNome() {return nome;}
+    public String getNome() {
+        return nome;
+    }
 
-    public void setNome(String nome) {this.nome = nome;}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
     public void setTipo(TipoElemental tipo) {
         this.tipo = tipo;
@@ -67,16 +72,30 @@ public abstract class Pokesal {
     }
 
     public void setHp(double hp) {
+        if (hpMax == 0) {
+            hpMax = hp;
+        }
         this.hp = hp;
     }
+    public double getHpMax() {
+        return hpMax;
+    }
 
-    public double getDesvio() { return desvio; }
+    public double getDesvio() {
+        return desvio;
+    }
 
-    public void setDesvio(double desvio) { this.desvio = desvio; }
+    public void setDesvio(double desvio) {
+        this.desvio = desvio;
+    }
 
-    public double getErro() { return erro; }
+    public double getErro() {
+        return erro;
+    }
 
-    public void setErro(double erro) { this.erro = erro; }
+    public void setErro(double erro) {
+        this.erro = erro;
+    }
 
     public double getCritico() {
         return critico;

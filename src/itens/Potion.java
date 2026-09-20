@@ -17,7 +17,7 @@ public class Potion implements Item {
     }
 
     public void usar(Pokesal p) {
-        p.setHp(p.getHp() + qtdCura);
+        p.setHp(Math.min(p.getHp() + qtdCura, p.getHpMax()));
     }
 
     public int getQtdCura() {
