@@ -1,6 +1,8 @@
 package batalha;
 
 
+import treinador.Treinador;
+
 public class Batalha {
     public Terreno terreno;
     public Treinador treinador1;
@@ -10,7 +12,7 @@ public class Batalha {
     public void iniciarBatalha(Treinador t1, Treinador t2){
         boolean vida = true;
         while (vida){
-            if (t1.Pokesal.spd < t2.Pokesal.spd) {
+            if (t1.getPokesal().getSpd() < t2.getPokesal().getSpd()) {
                 vida = executarTurno(t2, t1);
             }
             else{

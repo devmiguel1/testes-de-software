@@ -1,13 +1,14 @@
 package treinador;
 
+import itens.Item;
 import pokesal.Pokesal;
 
 import java.util.Random;
 
 public class Treinador {
-    private nome String;
+    private String nome;
     private Pokesal pokesal;
-    private Item[] itens;
+    private Item[] itens = new Item[2];
     private void melhoresCriticos(Pokesal pokesal){
         pokesal.setCritico(pokesal.getCritico() + 10);
     };

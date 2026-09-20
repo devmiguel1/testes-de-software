@@ -3,6 +3,7 @@ package batalha;
 import batalha.enums.TipoTerreno;
 import pokesal.Pokesal;
 import pokesal.enums.TipoElemental;
+import treinador.Treinador;
 
 import static batalha.enums.TipoTerreno.*;
 
