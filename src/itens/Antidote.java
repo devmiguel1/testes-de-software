@@ -1,4 +1,4 @@
-package packageItem;
+package itens;
 
 public class Antidote {
 }

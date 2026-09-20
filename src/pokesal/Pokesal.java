@@ -1,4 +1,6 @@
-package packagePokesal;
+package pokesal;
+
+import pokesal.enums.TipoElemental;
 
 public abstract class Pokesal {
     private double hp;
