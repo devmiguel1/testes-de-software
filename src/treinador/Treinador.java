@@ -28,14 +28,14 @@ public class Treinador {
 
     ;
 
-    public void ataquePokesal(Pokesal inimigo) {
+    public void ataquePokesal(Pokesal inimigo, Double bonus) {
         Random random = new Random();
         if (random.nextInt(1, 100) <= (inimigo.getDesvio() + pokesal.getErro())) {
             System.out.println("errou o golpe");
         } else if (random.nextInt() <= pokesal.getCritico()) {
-            inimigo.setHp(inimigo.getHp() - (pokesal.getAtk() * 2));
+            inimigo.setHp(inimigo.getHp() - (pokesal.getAtk() * 2 + bonus));
         } else {
-            inimigo.setHp(inimigo.getHp() - pokesal.getAtk());
+            inimigo.setHp(inimigo.getHp() - pokesal.getAtk() + bonus);
         }
     }
 

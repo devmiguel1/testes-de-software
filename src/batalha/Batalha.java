@@ -56,6 +56,7 @@ public class Batalha {
             }
         }
 
+        return true;
     }
 
     private void escolhaItem(Treinador t){
@@ -71,8 +72,6 @@ public class Batalha {
     private void ataqueTurno(Treinador tacante, Treinador defensor) {
         System.out.println("Ataque do " +tacante.getPokesal().getNome());
         double bonus = terreno.bonus(treinador1,treinador2);
-        tacante.ataquePokesal(defensor.getPokesal());
+        tacante.ataquePokesal(defensor.getPokesal(),bonus);
     }
-
-
 }
