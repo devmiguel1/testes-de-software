@@ -72,13 +72,21 @@ public abstract class Pokesal {
     }
 
     public void setHp(double hp) {
-        if (hpMax == 0) {
-            hpMax = hp;
+        if (hp < 0) {
+            hp = 0;
+        } else if (hp > hpMax) {
+            hp = hpMax;
         }
         this.hp = hp;
     }
+
     public double getHpMax() {
         return hpMax;
+    }
+
+    protected void setHpMax(double hpMax) {
+        this.hpMax = hpMax;
+        this.hp = hpMax;
     }
 
     public double getDesvio() {

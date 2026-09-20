@@ -6,6 +6,7 @@ public class SquirtSal extends Pokesal{
     public SquirtSal() {
         setNome("SquirtSal");
         setHp(44);
+        setHpMax(44);
         setAtk(10);
         setDef(4);
         setSpd(43);
