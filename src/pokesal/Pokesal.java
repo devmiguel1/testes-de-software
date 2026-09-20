@@ -7,6 +7,9 @@ public abstract class Pokesal {
     private double atk;
     private double def;
     private double spd;
+    private double erro = 5;
+    private double desvio = 5;
+    private double critico = 5;
     private TipoElemental tipo;
 
     public void atacar(Pokesal poke){
@@ -54,4 +57,19 @@ public abstract class Pokesal {
         this.hp = hp;
     }
 
+    public double getDesvio() { return desvio; }
+
+    public void setDesvio(double desvio) { this.desvio = desvio; }
+
+    public double getErro() { return erro; }
+
+    public void setErro(double erro) { this.erro = erro; }
+
+    public double getCritico() {
+        return critico;
+    }
+
+    public void setCritico(double critico) {
+        this.critico = critico;
+    }
 }
