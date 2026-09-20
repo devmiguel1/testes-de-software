@@ -4,6 +4,7 @@ import pokesal.enums.TipoElemental;
 
 public class SquirtSal extends Pokesal{
     public SquirtSal() {
+        setNome("SquirtSal");
         setHp(44);
         setAtk(48);
         setDef(65);

@@ -3,6 +3,7 @@ package pokesal;
 import pokesal.enums.TipoElemental;
 
 public abstract class Pokesal {
+    private String nome;
     private double hp;
     private double atk;
     private double def;
@@ -17,6 +18,10 @@ public abstract class Pokesal {
     public TipoElemental getTipo() {
         return tipo;
     }
+
+    public String getNome() {return nome;}
+
+    public void setNome(String nome) {this.nome = nome;}
 
     public void setTipo(TipoElemental tipo) {
         this.tipo = tipo;
