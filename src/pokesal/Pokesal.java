@@ -2,114 +2,130 @@ package pokesal;
 
 import pokesal.enums.TipoElemental;
 
+/**
+ * Classe do sistema.
+ */
+
 public abstract class Pokesal {
-    private String nome;
-    private double hp;
-    private double hpMax;
-    private double atk;
-    private double def;
-    private double spd;
-    private double erro = 5;
-    private double desvio = 5;
-    private double critico = 5;
-    private TipoElemental tipo;
-    private boolean envenenado;
+  private String nome;
+  private double hp;
+  private double hpMax;
+  private double atk;
+  private double def;
+  private double spd;
+  private double erro = 5;
+  private double desvio = 5;
+  private double critico = 5;
+  private TipoElemental tipo;
+  private boolean envenenado;
 
-    public void atacar(Pokesal poke) {
-        poke.setHp(poke.getHp() - atk);
-    }
+  /**
+   * Classe do sistema.
+   */
 
-    public boolean isEnvenenado() {
-        return envenenado;
-    }
+  public void atacar(Pokesal poke) {
+    poke.setHp(poke.getHp() - atk);
+  }
 
-    public void setEnvenenado(boolean envenenado) {
-        this.envenenado = envenenado;
-    }
+  public boolean isEnvenenado() {
+    return envenenado;
+  }
 
-    public TipoElemental getTipo() {
-        return tipo;
-    }
+  public void setEnvenenado(boolean envenenado) {
+    this.envenenado = envenenado;
+  }
 
-    public String getNome() {
-        return nome;
-    }
+  public TipoElemental getTipo() {
+    return tipo;
+  }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+  public String getNome() {
+    return nome;
+  }
 
-    public void setTipo(TipoElemental tipo) {
-        this.tipo = tipo;
-    }
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-    public double getSpd() {
-        return spd;
-    }
+  public void setTipo(TipoElemental tipo) {
+    this.tipo = tipo;
+  }
 
-    public void setSpd(double spd) {
-        this.spd = spd;
-    }
+  public double getSpd() {
+    return spd;
+  }
 
-    public double getDef() {
-        return def;
-    }
+  public void setSpd(double spd) {
+    this.spd = spd;
+  }
 
-    public void setDef(double def) {
-        this.def = def;
-    }
+  public double getDef() {
+    return def;
+  }
 
-    public double getAtk() {
-        return atk;
-    }
+  public void setDef(double def) {
+    this.def = def;
+  }
 
-    public void setAtk(double atk) {
-        this.atk = atk;
-    }
+  public double getAtk() {
+    return atk;
+  }
 
-    public double getHp() {
-        return hp;
-    }
+  public void setAtk(double atk) {
+    this.atk = atk;
+  }
 
-    public void setHp(double hp) {
-        if (hp < 0) {
-            hp = 0;
-        } else if (hp > hpMax) {
-            hp = hpMax;
-        }
-        this.hp = hp;
-    }
+  public double getHp() {
+    return hp;
+  }
 
-    public double getHpMax() {
-        return hpMax;
-    }
+  /**
+   * Classe do sistema.
+   */
 
-    protected void setHpMax(double hpMax) {
-        this.hpMax = hpMax;
-        this.hp = hpMax;
+  public void setHp(double hp) {
+    if (hp < 0) {
+      hp = 0;
+    } else if (hp > hpMax) {
+      hp = hpMax;
     }
+    this.hp = hp;
+  }
 
-    public double getDesvio() {
-        return desvio;
-    }
+  public double getHpMax() {
+    return hpMax;
+  }
 
-    public void setDesvio(double desvio) {
-        this.desvio = desvio;
-    }
+  /**
+   * Classe do sistema.
+   */
 
-    public double getErro() {
-        return erro;
-    }
+  protected void setHpMax(double hpMax) {
+    this.hpMax = hpMax;
+    this.hp = hpMax;
+  }
 
-    public void setErro(double erro) {
-        this.erro = erro;
-    }
+  public double getDesvio() {
+    return desvio;
+  }
 
-    public double getCritico() {
-        return critico;
-    }
+  public void setDesvio(double desvio) {
+    this.desvio = desvio;
+  }
 
-    public void setCritico(double critico) {
-        this.critico = critico;
-    }
+  public double getErro() {
+    return erro;
+  }
+
+  public void setErro(double erro) {
+    this.erro = erro;
+  }
+
+  public double getCritico() {
+    return critico;
+  }
+
+  public void setCritico(double critico) {
+    this.critico = critico;
+  }
 }

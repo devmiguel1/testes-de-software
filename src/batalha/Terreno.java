@@ -1,75 +1,91 @@
 package batalha;
 
+import static batalha.enums.TipoTerreno.ASFALTO_QUENTE;
+import static batalha.enums.TipoTerreno.CANTEIRO_CENTRAL;
+import static batalha.enums.TipoTerreno.PISO_ESCORREGADIO;
+
 import batalha.enums.TipoTerreno;
 import pokesal.Pokesal;
 import pokesal.enums.TipoElemental;
 import treinador.Treinador;
 
-import static batalha.enums.TipoTerreno.*;
+/**
+ * Classe do sistema.
+ */
 
 public class Terreno {
-    private TipoTerreno terreno;
+  private TipoTerreno terreno;
 
-    public double bonus(Treinador atacante, Treinador defensor) {
+  /**
+   * Classe do sistema.
+   */
 
-        Pokesal pokeAtacante = atacante.getPokesal();
-        Pokesal pokeDefensor = defensor.getPokesal();
-        double bonusTipo = 1.0;
+  public double bonus(Treinador atacante, Treinador defensor) {
 
-        switch (pokeAtacante.getTipo()) {
+    Pokesal pokeAtacante = atacante.getPokesal();
+    Pokesal pokeDefensor = defensor.getPokesal();
+    double bonusTipo = 1.0;
 
-            case FOGO:
-                if (pokeDefensor.getTipo() == TipoElemental.PLANTA) {
-                    bonusTipo = 2.0;
-                } else if (pokeDefensor.getTipo() == TipoElemental.AGUA) {
-                    bonusTipo = 0.5;
-                }
-                break;
+    switch (pokeAtacante.getTipo()) {
 
-            case AGUA:
-                if (pokeDefensor.getTipo() == TipoElemental.FOGO) {
-                    bonusTipo = 2.0;
-                } else if (pokeDefensor.getTipo() == TipoElemental.PLANTA) {
-                    bonusTipo = 0.5;
-                }
-                break;
-
-            case PLANTA:
-                if (pokeDefensor.getTipo() == TipoElemental.AGUA) {
-                    bonusTipo = 2.0;
-                } else if (pokeDefensor.getTipo() == TipoElemental.FOGO) {
-                    bonusTipo = 0.5;
-                }
-                break;
-
-            default:
-                break;
+      case FOGO:
+        if (pokeDefensor.getTipo() == TipoElemental.PLANTA) {
+          bonusTipo = 2.0;
+        } else if (pokeDefensor.getTipo() == TipoElemental.AGUA) {
+          bonusTipo = 0.5;
         }
+        break;
 
-        return bonusTipo * bonusTerreno(pokeAtacante);
-    }
-
-    private double bonusTerreno(Pokesal pokeAtacante) {
-        if (terreno == ASFALTO_QUENTE && pokeAtacante.getTipo() == TipoElemental.FOGO) {
-            return 1.15;
+      case AGUA:
+        if (pokeDefensor.getTipo() == TipoElemental.FOGO) {
+          bonusTipo = 2.0;
+        } else if (pokeDefensor.getTipo() == TipoElemental.PLANTA) {
+          bonusTipo = 0.5;
         }
-        if (terreno == PISO_ESCORREGADIO && pokeAtacante.getTipo() == TipoElemental.AGUA) {
-            return 1.10;
+        break;
+
+      case PLANTA:
+        if (pokeDefensor.getTipo() == TipoElemental.AGUA) {
+          bonusTipo = 2.0;
+        } else if (pokeDefensor.getTipo() == TipoElemental.FOGO) {
+          bonusTipo = 0.5;
         }
-        return 1.0;
+        break;
+
+      default:
+        break;
     }
 
-    public void efeitoFimDeTurno(Pokesal pokesal) {
-        if (terreno == CANTEIRO_CENTRAL && pokesal.getTipo() == TipoElemental.PLANTA && pokesal.getHp() > 0) {
-            pokesal.setHp(pokesal.getHp() + pokesal.getHpMax() * 0.05);
-        }
-    }
+    return bonusTipo * bonusTerreno(pokeAtacante);
+  }
 
-    public TipoTerreno getTerreno() {
-        return terreno;
+  private double bonusTerreno(Pokesal pokeAtacante) {
+    if (terreno == ASFALTO_QUENTE && pokeAtacante.getTipo() == TipoElemental.FOGO) {
+      return 1.15;
     }
+    if (terreno == PISO_ESCORREGADIO && pokeAtacante.getTipo() == TipoElemental.AGUA) {
+      return 1.10;
+    }
+    return 1.0;
+  }
 
-    public void setTerreno(TipoTerreno terreno) {
-        this.terreno = terreno;
+  /**
+   * Classe do sistema.
+   */
+
+  public void efeitoFimDeTurno(Pokesal pokesal) {
+    if (terreno == CANTEIRO_CENTRAL && pokesal.getTipo() == TipoElemental.PLANTA
+        &&
+        pokesal.getHp() > 0) {
+      pokesal.setHp(pokesal.getHp() + pokesal.getHpMax() * 0.05);
     }
+  }
+
+  public TipoTerreno getTerreno() {
+    return terreno;
+  }
+
+  public void setTerreno(TipoTerreno terreno) {
+    this.terreno = terreno;
+  }
 }

@@ -2,29 +2,40 @@ package itens;
 
 import pokesal.Pokesal;
 
+/**
+ * Classe do sistema.
+ */
+
 public class Potion implements Item {
 
-    private int qtdCura;
-    private String nome = "Potion";
+  private int qtdCura;
+  private String nome = "Potion";
 
-    public String getNome() {
-        return nome;
-    }
+  public String getNome() {
+    return nome;
+  }
 
+  /**
+   * Classe do sistema.
+   */
 
-    public Potion(int qtdCura) {
-        this.qtdCura = qtdCura;
-    }
+  public Potion(int qtdCura) {
+    this.qtdCura = qtdCura;
+  }
 
-    public void usar(Pokesal p) {
-        p.setHp(Math.min(p.getHp() + qtdCura, p.getHpMax()));
-    }
+  /**
+   * Classe do sistema.
+   */
 
-    public int getQtdCura() {
-        return qtdCura;
-    }
+  public void usar(Pokesal pokesal) {
+    pokesal.setHp(Math.min(pokesal.getHp() + qtdCura, pokesal.getHpMax()));
+  }
 
-    public void setQtdCura(int qtdCura) {
-        this.qtdCura = qtdCura;
-    }
+  public int getQtdCura() {
+    return qtdCura;
+  }
+
+  public void setQtdCura(int qtdCura) {
+    this.qtdCura = qtdCura;
+  }
 }

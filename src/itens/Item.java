@@ -4,8 +4,7 @@ import pokesal.Pokesal;
 
 public interface Item {
 
-    public void usar(Pokesal p);
+  public void usar(Pokesal pokesal);
 
-    public String getNome();
-
+  public String getNome();
 }
