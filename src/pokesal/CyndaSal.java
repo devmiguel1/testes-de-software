@@ -6,8 +6,8 @@ public class CyndaSal extends Pokesal{
     public CyndaSal() {
         setNome("CyndaSal");
         setHp(39);
-        setAtk(52);
-        setDef(43);
+        setAtk(15);
+        setDef(5);
         setSpd(65);
         setTipo(TipoElemental.FOGO);
     }
