@@ -5,6 +5,12 @@ import pokesal.Pokesal;
 public class Antidote implements Item {
 
     private boolean efeito = false;
+    private String nome = "Antidote";
+
+    public String getNome() {
+        return nome;
+    }
+
 
     public void usar(Pokesal p) {
 

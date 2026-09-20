@@ -5,6 +5,12 @@ import pokesal.Pokesal;
 public class Potion implements Item {
 
     private int qtdCura;
+    private String nome = "Potion";
+
+    public String getNome() {
+        return nome;
+    }
+
 
     public Potion(int qtdCura) {
         this.qtdCura = qtdCura;

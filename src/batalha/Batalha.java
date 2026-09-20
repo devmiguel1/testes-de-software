@@ -49,9 +49,9 @@ public class Batalha {
             escolhaItem(t2);
         }else{
             ataqueTurno(t2,t1);
-            if (t2.getPokesal().getHp() <= 0){
-                System.out.println(t2.getPokesal().getNome() +"morreu...");
-                System.out.println(t1.getPokesal().getNome() +"ganhou a batalha...");
+            if (t1.getPokesal().getHp() <= 0){
+                System.out.println(t1.getPokesal().getNome() +"morreu...");
+                System.out.println(t2.getPokesal().getNome() +"ganhou a batalha...");
                 return false;
             }
         }
@@ -69,9 +69,10 @@ public class Batalha {
         }
     }
 
-    private void ataqueTurno(Treinador tacante, Treinador defensor) {
-        System.out.println("Ataque do " +tacante.getPokesal().getNome());
-        double bonus = terreno.bonus(treinador1,treinador2);
-        tacante.ataquePokesal(defensor.getPokesal(),bonus);
+    private void ataqueTurno(Treinador atacante, Treinador defensor) {
+        System.out.println("Ataque do " + atacante.getPokesal().getNome());
+        double bonus = terreno.bonus(atacante, defensor);
+        atacante.ataquePokesal(defensor.getPokesal(), bonus);
     }
+
 }

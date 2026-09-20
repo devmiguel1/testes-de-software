@@ -32,15 +32,16 @@ public class Treinador {
         Random random = new Random();
         if (random.nextInt(1, 100) <= (inimigo.getDesvio() + pokesal.getErro())) {
             System.out.println("errou o golpe");
-        } else if (random.nextInt() <= pokesal.getCritico()) {
-            inimigo.setHp(inimigo.getHp() - (pokesal.getAtk() * 2 + bonus));
+        } else if (random.nextInt(1,100) <= pokesal.getCritico()) {
+            System.out.println("Acertou um ataque critico");
+            inimigo.setHp(inimigo.getHp() - (pokesal.getAtk() * 2 * bonus));
         } else {
-            inimigo.setHp(inimigo.getHp() - pokesal.getAtk() + bonus);
+            inimigo.setHp(inimigo.getHp() - pokesal.getAtk() * bonus);
         }
     }
 
     public void listarItens() {
-        System.out.println("[1] " +itens[0] +" [2] "+ itens[1]);
+        System.out.println("[1] " +itens[0].getNome() +" [2] "+ itens[1].getNome());
     }
 
     public Item[] getItens() {
