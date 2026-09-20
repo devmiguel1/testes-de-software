@@ -9,11 +9,19 @@ public abstract class Pokesal {
     private double def;
     private double spd;
     private TipoElemental tipo;
+    private boolean envenenado;
 
     public void atacar(Pokesal poke){
         poke.setHp(poke.getHp() - atk);
     }
 
+    public boolean isEnvenenado() {
+        return envenenado;
+    }
+
+    public void setEnvenenado(boolean envenenado) {
+        this.envenenado = envenenado;
+    }
 
     public TipoElemental getTipo() {
         return tipo;
