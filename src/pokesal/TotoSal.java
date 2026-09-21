@@ -3,14 +3,18 @@ package pokesal;
 import pokesal.enums.TipoElemental;
 
 /**
- * Classe do sistema.
+ * Representa o Pokesal TotoSal.
+ *
+ * <p>Define os atributos iniciais do TotoSal, como nome, HP,
+ * ataque, defesa, velocidade, tipo elemental e estado de envenenamento.</p>
  */
-
 public class TotoSal extends Pokesal {
   /**
-   * Classe do sistema.
+   * Cria um TotoSal e define seus atributos iniciais.
+   *
+   * <p>O TotoSal é definido como do tipo Água e começa a batalha
+   * sem estar envenenado.</p>
    */
-
   public TotoSal() {
     setNome("TotoSal");
     setHp(50);
@@ -22,4 +26,3 @@ public class TotoSal extends Pokesal {
     setEnvenenado(false);
   }
 }
-

@@ -3,14 +3,18 @@ package pokesal;
 import pokesal.enums.TipoElemental;
 
 /**
- * Classe do sistema.
+ * Representa o Pokesal SquirtSal.
+ *
+ * <p>Define os atributos iniciais do SquirtSal, como nome, HP,
+ * ataque, defesa, velocidade, tipo elemental e estado de envenenamento.</p>
  */
-
 public class SquirtSal extends Pokesal {
   /**
-   * Classe do sistema.
+   * Cria um SquirtSal e define seus atributos iniciais.
+   *
+   * <p>O SquirtSal é definido como do tipo Água e começa a batalha
+   * sem estar envenenado.</p>
    */
-
   public SquirtSal() {
     setNome("SquirtSal");
     setHp(44);

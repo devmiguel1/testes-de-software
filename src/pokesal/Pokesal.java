@@ -3,9 +3,12 @@ package pokesal;
 import pokesal.enums.TipoElemental;
 
 /**
- * Classe do sistema.
+ * Representa a classe base dos Pokesais utilizados no sistema.
+ *
+ * <p>Armazena as características básicas de um Pokesal, como HP,
+ * ataque, defesa, velocidade e tipo elemental, além de controlar
+ * o estado de envenenamento.</p>
  */
-
 public abstract class Pokesal {
   private String nome;
   private double hp;
@@ -20,9 +23,13 @@ public abstract class Pokesal {
   private boolean envenenado;
 
   /**
-   * Classe do sistema.
+   * Realiza um ataque básico contra outro Pokesal.
+   *
+   * <p>O dano causado é igual ao valor de ataque do Pokesal
+   * que está realizando o ataque.</p>
+   *
+   * @param poke Pokesal que receberá o ataque
    */
-
   public void atacar(Pokesal poke) {
     poke.setHp(poke.getHp() - atk);
   }
@@ -80,9 +87,14 @@ public abstract class Pokesal {
   }
 
   /**
-   * Classe do sistema.
+   * Define o HP atual do Pokesal.
+   *
+   * <p>O valor do HP não pode ser menor que zero nem maior que
+   * o HP máximo. Caso o valor informado ultrapasse esses limites,
+   * ele é ajustado automaticamente.</p>
+   *
+   * @param hp novo valor do HP
    */
-
   public void setHp(double hp) {
     if (hp < 0) {
       hp = 0;
@@ -97,9 +109,13 @@ public abstract class Pokesal {
   }
 
   /**
-   * Classe do sistema.
+   * Define o HP máximo do Pokesal.
+   *
+   * <p>Ao definir o HP máximo, o HP atual também é definido com
+   * o mesmo valor.</p>
+   *
+   * @param hpMax novo valor do HP máximo
    */
-
   protected void setHpMax(double hpMax) {
     this.hpMax = hpMax;
     this.hp = hpMax;

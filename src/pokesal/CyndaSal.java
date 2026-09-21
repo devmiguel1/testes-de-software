@@ -3,14 +3,18 @@ package pokesal;
 import pokesal.enums.TipoElemental;
 
 /**
- * Classe do sistema.
+ * Representa o Pokesal CyndaSal.
+ *
+ * <p>Define os atributos iniciais do CyndaSal, como nome, HP,
+ * ataque, defesa, velocidade, tipo elemental e estado de envenenamento.</p>
  */
-
 public class CyndaSal extends Pokesal {
   /**
-   * Classe do sistema.
+   * Cria um CyndaSal e define seus atributos iniciais.
+   *
+   * <p>O CyndaSal é definido como do tipo Fogo e começa a batalha
+   * sem estar envenenado.</p>
    */
-
   public CyndaSal() {
     setNome("CyndaSal");
     setHp(39);

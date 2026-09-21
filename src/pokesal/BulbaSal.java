@@ -3,14 +3,18 @@ package pokesal;
 import pokesal.enums.TipoElemental;
 
 /**
- * Classe do sistema.
+ * Representa o Pokesal BulbaSal.
+ *
+ * <p>Define os atributos iniciais do BulbaSal, como nome, HP,
+ * ataque, defesa, velocidade, tipo elemental e estado de envenenamento.</p>
  */
-
 public class BulbaSal extends Pokesal {
   /**
-   * Classe do sistema.
+   * Cria um BulbaSal e define seus atributos iniciais.
+   *
+   * <p>O BulbaSal é definido como do tipo Planta e começa a batalha
+   * sem estar envenenado.</p>
    */
-
   public BulbaSal() {
     setNome("BulbaSal");
     setHp(45);

@@ -3,9 +3,8 @@ package itens;
 import pokesal.Pokesal;
 
 /**
- * Classe do sistema.
+ * Representa o item SuperPotion, utilizado para recuperar o HP de um Pokesal.
  */
-
 public class SuperPotion implements Item {
 
   private int qtdCura;
@@ -16,17 +15,22 @@ public class SuperPotion implements Item {
   }
 
   /**
-   * Classe do sistema.
+   * Cria uma SuperPotion com uma quantidade de cura definida.
+   *
+   * @param qtdCura quantidade de HP que a SuperPotion recupera
    */
-
   public SuperPotion(int qtdCura) {
     this.qtdCura = qtdCura;
   }
 
   /**
-   * Classe do sistema.
+   * Utiliza a SuperPotion para recuperar o HP do Pokesal.
+   *
+   * <p>A quantidade de cura é adicionada diretamente ao HP atual
+   * do Pokesal.</p>
+   *
+   * @param pokesal Pokesal que receberá o efeito da SuperPotion
    */
-
   public void usar(Pokesal pokesal) {
     pokesal.setHp(pokesal.getHp() + qtdCura);
   }

@@ -10,16 +10,27 @@ import pokesal.enums.TipoElemental;
 import treinador.Treinador;
 
 /**
- * Classe do sistema.
+ * Representa o terreno onde a batalha está acontecendo.
+ *
+ * <p>É responsável por calcular os bônus de ataque de acordo com
+ * o tipo do Pokesal e o terreno, além de aplicar efeitos específicos
+ * ao final de cada turno.</p>
  */
-
 public class Terreno {
   private TipoTerreno terreno;
 
   /**
-   * Classe do sistema.
+   * Calcula o bônus de ataque considerando o tipo do Pokesal
+   * atacante e o tipo do Pokesal defensor.
+   *
+   * <p>O bônus pode aumentar ou diminuir de acordo com a vantagem
+   * ou desvantagem entre os tipos elementais. Depois disso, o bônus
+   * específico do terreno também é aplicado ao resultado.</p>
+   *
+   * @param atacante treinador que está realizando o ataque
+   * @param defensor treinador que está recebendo o ataque
+   * @return multiplicador final do bônus do ataque
    */
-
   public double bonus(Treinador atacante, Treinador defensor) {
 
     Pokesal pokeAtacante = atacante.getPokesal();
@@ -70,9 +81,13 @@ public class Terreno {
   }
 
   /**
-   * Classe do sistema.
+   * Aplica o efeito do terreno ao final do turno.
+   *
+   * <p>Quando o terreno é um canteiro central e o Pokesal é do tipo
+   * Planta e ainda possui HP, ele recupera 5% do seu HP máximo.</p>
+   *
+   * @param pokesal Pokesal que receberá o efeito do terreno
    */
-
   public void efeitoFimDeTurno(Pokesal pokesal) {
     if (terreno == CANTEIRO_CENTRAL && pokesal.getTipo() == TipoElemental.PLANTA
         &&
