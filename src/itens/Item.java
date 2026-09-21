@@ -18,5 +18,11 @@ public interface Item {
    */
   public void usar(Pokesal pokesal);
 
+  /**
+   * Retorna o nome associado a este objeto.
+   *
+   * @return Uma String contendo o nome.
+   */
+
   public String getNome();
 }
