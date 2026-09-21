@@ -7,8 +7,17 @@ import pokesal.CharSal;
 import pokesal.SquirtSal;
 import treinador.Treinador;
 
+/**
+ * Classe principal responsável por iniciar a execução do sistema.
+ */
 public class Main {
 
+    /**
+     * Inicia a execução da aplicação e configura os treinadores,
+     * seus Pokesal, perks, itens e o terreno da batalha.
+     *
+     * @param args argumentos recebidos pela linha de comando
+     */
     public static void main(String[] args) {
         Treinador t1 = new Treinador();
         t1.setNome("Ronaldo");
