@@ -70,7 +70,17 @@ public class Terreno {
     return bonusTipo * bonusTerreno(pokeAtacante);
   }
 
-  private double bonusTerreno(Pokesal pokeAtacante) {
+  /**
+   * Aplica o efeito do terreno ao final do turno.
+   *
+   * <p>Quando o terreno é um ASFALTO QUENTE e o Pokesal é do tipo
+   * Fogo, ele ganha um bonus de 1,15 no dano. E Quando o terreno é um PISO ESCORREGADIO e o Pokesal
+   * é do tipo Agua, ele ganha um bonus de 1,10 no dano.</p>
+   *
+   * @param pokeAtacante Pokesal que receberá o efeito do terreno
+   * @return multiplicador do bônus do ataque
+   */
+  public double bonusTerreno(Pokesal pokeAtacante) {
     if (terreno == ASFALTO_QUENTE && pokeAtacante.getTipo() == TipoElemental.FOGO) {
       return 1.15;
     }
