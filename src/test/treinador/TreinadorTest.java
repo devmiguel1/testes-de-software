@@ -1,5 +1,6 @@
 package treinador;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import pokesal.CharSal;
 import pokesal.Pokesal;
 import treinador.Treinador;
@@ -23,10 +24,6 @@ class TreinadorTest {
     treinador.setPokesal(pokesal);
   }
 
-  @org.junit.jupiter.api.Test
-  void escolhaDePerk() {
-  }
-
   @ParameterizedTest
   @ValueSource(ints = {5, 0, -3})
   @DisplayName("Numeros invalidos não podem mudar os atributos")
@@ -45,4 +42,33 @@ class TreinadorTest {
     assertEquals(defesaInicial, pokesal.getDef());
   }
 
+  @Test
+  @DisplayName("Perk 1 deve aumentar o crítico em 10")
+  void testeCritico() {
+    double criticoInicial = pokesal.getCritico();
+
+    treinador.escolhaDePerk(1);
+
+    assertEquals(criticoInicial + 10, pokesal.getCritico());
+  }
+
+  @Test
+  @DisplayName("Perk 2 deve aumentar o desvio em 5")
+  void testeDesvio() {
+    double desvioInicial = pokesal.getDesvio();
+
+    treinador.escolhaDePerk(2);
+
+    assertEquals(desvioInicial + 5, pokesal.getDesvio());
+  }
+
+  @Test
+  @DisplayName("Perk 3 deve aumentar a defesa em 5")
+  void testeDefesa() {
+    double defesaInicial = pokesal.getDef();
+
+    treinador.escolhaDePerk(3);
+
+    assertEquals(defesaInicial + 5, pokesal.getDef());
+  }
 }
