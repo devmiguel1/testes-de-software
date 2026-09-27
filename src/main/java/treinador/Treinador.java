@@ -26,6 +26,7 @@ public class Treinador {
   }
 
   private void perkDefesa() {
+    pokesal.setDefMax(pokesal.getDef() + 5);
     pokesal.setDef(pokesal.getDef() + 5);
   }
 

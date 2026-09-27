@@ -43,6 +43,20 @@ class TreinadorTest {
   }
 
   @Test
+  @DisplayName("Teste do limite de hp")
+  void testCalculoDanoBoundaryValues(){
+
+    pokesal.setHp(100);
+    pokesal.setDef(100);
+    pokesal.setAtk(100);
+
+    assertEquals(pokesal.getHp(), pokesal.getHpMax());
+    assertEquals(pokesal.getDef(), pokesal.getDefMax());
+    assertEquals(pokesal.getAtk(), pokesal.getAtkMax());
+  }
+
+
+  @Test
   @DisplayName("Perk 1 deve aumentar o crítico em 10")
   void testeCritico() {
     double criticoInicial = pokesal.getCritico();

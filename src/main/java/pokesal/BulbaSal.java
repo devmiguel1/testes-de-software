@@ -20,6 +20,8 @@ public class BulbaSal extends Pokesal {
     setHp(45);
     setHpMax(45);
     setAtk(12);
+    setAtkMax(12);
+    setDefMax(4);
     setDef(4);
     setSpd(45);
     setTipo(TipoElemental.PLANTA);

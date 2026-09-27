@@ -13,6 +13,8 @@ public abstract class Pokesal {
   private String nome;
   private double hp;
   private double hpMax;
+  private double atkMax;
+  private double defMax;
   private double atk;
   private double def;
   private double spd;
@@ -70,8 +72,28 @@ public abstract class Pokesal {
     return def;
   }
 
+  public void setAtkMax(double atkMax) {
+    this.atkMax = atkMax;
+  }
+
+  public double getAtkMax(){
+    return atkMax;
+  }
+
+  public void setDefMax(double defMax){
+    this.defMax = defMax;
+  }
+
+  public double getDefMax(){
+    return defMax;
+  }
+
   public void setDef(double def) {
-    this.def = def;
+    if(def > defMax){
+      this.def = defMax;
+    }else{
+      this.def = def;
+    }
   }
 
   public double getAtk() {
@@ -79,7 +101,11 @@ public abstract class Pokesal {
   }
 
   public void setAtk(double atk) {
-    this.atk = atk;
+    if(atk > atkMax){
+      this.atk = atkMax;
+    }else {
+      this.atk = atk;
+    }
   }
 
   public double getHp() {

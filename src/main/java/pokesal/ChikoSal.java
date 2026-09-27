@@ -19,6 +19,8 @@ public class ChikoSal extends Pokesal {
     setNome("ChikoSal");
     setHp(45);
     setHpMax(45);
+    setAtkMax(14);
+    setDefMax(6);
     setAtk(14);
     setDef(6);
     setSpd(45);

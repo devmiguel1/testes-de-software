@@ -19,6 +19,8 @@ public class TotoSal extends Pokesal {
     setNome("TotoSal");
     setHp(50);
     setHpMax(50);
+    setAtkMax(11);
+    setDefMax(5);
     setAtk(11);
     setDef(5);
     setSpd(43);

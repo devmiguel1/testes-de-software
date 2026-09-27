@@ -19,6 +19,8 @@ public class CharSal extends Pokesal {
     setNome("CharSal");
     setHp(39);
     setHpMax(39);
+    setAtkMax(17);
+    setDefMax(6);
     setAtk(17);
     setDef(6);
     setSpd(65);

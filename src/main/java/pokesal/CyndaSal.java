@@ -19,6 +19,8 @@ public class CyndaSal extends Pokesal {
     setNome("CyndaSal");
     setHp(39);
     setHpMax(39);
+    setAtkMax(15);
+    setDefMax(5);
     setAtk(15);
     setDef(5);
     setSpd(65);
