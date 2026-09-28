@@ -1,0 +1,6 @@
+projectKey=Atividade-Pontuada-Testes
+serverUrl=http://localhost:9000
+serverVersion=26.9.0.129388
+dashboardUrl=http://localhost:9000/dashboard?id=Atividade-Pontuada-Testes
+ceTaskId=a829391c-6884-4e4e-9064-141a567ba729
+ceTaskUrl=http://localhost:9000/api/ce/task?id=a829391c-6884-4e4e-9064-141a567ba729

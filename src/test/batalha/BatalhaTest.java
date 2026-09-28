@@ -56,7 +56,7 @@ public class BatalhaTest {
   }
 
   @Test
-  @DisplayName("O dano deveria ser metade devido à desvantagem do tipo Fogo contra Agua.")
+  @DisplayName("Teste sobre a vantangem elemental")
   public void testVantagemElemental() {
     double bonus = terreno.bonus(t1, t2);
     t1.ataquePokesal(t2.getPokesal(), bonus);
@@ -66,12 +66,12 @@ public class BatalhaTest {
         .getPokesal()
         .getHp();
 
-    assertEquals(vidaEsperada, vidaAtual);
+    assertEquals(vidaEsperada, vidaAtual,
+        "O dano deveria ser metade devido à desvantagem do tipo Fogo contra Agua.");
   }
 
   @Test
-  @DisplayName("O dano deveria ter um multiplicador de 0.575 devido à desvantagem do tipo Fogo " +
-      "contra Agua e a vantagem do tipo de terreno.")
+  @DisplayName("Teste sobre a vantangem de terreno")
   public void testEfeitoTerrenoEstacionamentoUCSal() {
     terreno.setTerreno(TipoTerreno.ASFALTO_QUENTE);
 
@@ -83,10 +83,14 @@ public class BatalhaTest {
         .getPokesal()
         .getHp();
 
-    assertEquals(vidaEsperada, vidaAtual);
+    assertEquals(vidaEsperada, vidaAtual,
+        "O dano deveria ter um multiplicador de 0.575 devido à desvantagem do tipo Fogo contra " +
+            "Agua e a vantagem do tipo de terreno.");
   }
 
   @Test
+  @DisplayName("Teste sobre a prioridade de ataque de acordo com a velocidade de ataque dos " +
+      "pokesals")
   public void testOrdemDeAtaquePorVelocidade() {
     Batalha batalha = new Batalha();
     terreno.setTerreno(TipoTerreno.CANTEIRO_CENTRAL);
@@ -123,6 +127,7 @@ public class BatalhaTest {
   }
 
   @Test
+  @DisplayName("Teste sobre o excesso de itens usados")
   public void testUsoLimiteDeItensExcedido() {
     t1.setItens(new Item[] {new Potion(10), new Potion(10)});
     t1.usarItem(0);
