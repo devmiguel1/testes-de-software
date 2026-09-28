@@ -76,22 +76,22 @@ public abstract class Pokesal {
     this.atkMax = atkMax;
   }
 
-  public double getAtkMax(){
+  public double getAtkMax() {
     return atkMax;
   }
 
-  public void setDefMax(double defMax){
+  public void setDefMax(double defMax) {
     this.defMax = defMax;
   }
 
-  public double getDefMax(){
+  public double getDefMax() {
     return defMax;
   }
 
   public void setDef(double def) {
-    if(def > defMax){
+    if (def > defMax) {
       this.def = defMax;
-    }else{
+    } else {
       this.def = def;
     }
   }
@@ -101,9 +101,9 @@ public abstract class Pokesal {
   }
 
   public void setAtk(double atk) {
-    if(atk > atkMax){
+    if (atk > atkMax) {
       this.atk = atkMax;
-    }else {
+    } else {
       this.atk = atk;
     }
   }

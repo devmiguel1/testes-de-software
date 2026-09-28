@@ -19,8 +19,8 @@ public class Batalha {
    * Pokésais de cada treinador. A batalha continua enquanto
    * nenhum dos dois treinadores for derrotado.</p>
    *
-   * @param t1 treinador que participa da batalha
-   * @param t2 segundo treinador que participa da batalha
+   * @param t1      treinador que participa da batalha
+   * @param t2      segundo treinador que participa da batalha
    * @param terreno terreno utilizado durante a batalha
    */
   public void iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
@@ -46,11 +46,11 @@ public class Batalha {
    * se o treinador defensor foi derrotado. Caso nenhum treinador
    * seja derrotado, o segundo treinador também realiza seu ataque.</p>
    *
-   * @param t1 treinador que realiza o primeiro ataque
-   * @param t2 treinador que recebe o primeiro ataque
+   * @param t1      treinador que realiza o primeiro ataque
+   * @param t2      treinador que recebe o primeiro ataque
    * @param terreno terreno utilizado para calcular o bônus do ataque
    * @return {@code false} quando um dos treinadores é derrotado,
-   *         ou {@code true} quando a batalha deve continuar
+   * ou {@code true} quando a batalha deve continuar
    */
   public boolean executarTurno(Treinador t1, Treinador t2, Terreno terreno) {
     curarSeNecessario(t1);
@@ -107,7 +107,7 @@ public class Batalha {
    *
    * @param atacante treinador responsável por realizar o ataque
    * @param defensor treinador que recebe o ataque
-   * @param terreno terreno utilizado para calcular o bônus do ataque
+   * @param terreno  terreno utilizado para calcular o bônus do ataque
    */
   private void ataqueTurno(Treinador atacante, Treinador defensor, Terreno terreno) {
     double bonus = terreno.bonus(atacante, defensor);
@@ -125,7 +125,7 @@ public class Batalha {
     double dano = hpAntes - defensor
         .getPokesal()
         .getHp();
-    System.out.printf("dano: %.2f \n", dano);
+    System.out.printf("dano: %.2f %n", dano);
     System.out.printf("HP de %s: %.2f%n", defensor
         .getPokesal()
         .getNome(), defensor

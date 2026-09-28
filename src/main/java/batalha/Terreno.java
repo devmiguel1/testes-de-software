@@ -17,7 +17,7 @@ import treinador.Treinador;
  * ao final de cada turno.</p>
  */
 public class Terreno {
-  private TipoTerreno terreno;
+  private TipoTerreno tipoterreno;
 
   /**
    * Calcula o bônus de ataque considerando o tipo do Pokesal
@@ -81,10 +81,10 @@ public class Terreno {
    * @return multiplicador do bônus do ataque
    */
   public double bonusTerreno(Pokesal pokeAtacante) {
-    if (terreno == ASFALTO_QUENTE && pokeAtacante.getTipo() == TipoElemental.FOGO) {
+    if (tipoterreno == ASFALTO_QUENTE && pokeAtacante.getTipo() == TipoElemental.FOGO) {
       return 1.15;
     }
-    if (terreno == PISO_ESCORREGADIO && pokeAtacante.getTipo() == TipoElemental.AGUA) {
+    if (tipoterreno == PISO_ESCORREGADIO && pokeAtacante.getTipo() == TipoElemental.AGUA) {
       return 1.10;
     }
     return 1.0;
@@ -99,7 +99,7 @@ public class Terreno {
    * @param pokesal Pokesal que receberá o efeito do terreno
    */
   public void efeitoFimDeTurno(Pokesal pokesal) {
-    if (terreno == CANTEIRO_CENTRAL && pokesal.getTipo() == TipoElemental.PLANTA
+    if (tipoterreno == CANTEIRO_CENTRAL && pokesal.getTipo() == TipoElemental.PLANTA
         &&
         pokesal.getHp() > 0) {
       pokesal.setHp(pokesal.getHp() + pokesal.getHpMax() * 0.05);
@@ -107,10 +107,10 @@ public class Terreno {
   }
 
   public TipoTerreno getTerreno() {
-    return terreno;
+    return tipoterreno;
   }
 
   public void setTerreno(TipoTerreno terreno) {
-    this.terreno = terreno;
+    this.tipoterreno = terreno;
   }
 }

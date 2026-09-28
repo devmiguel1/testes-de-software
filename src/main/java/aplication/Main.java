@@ -1,3 +1,5 @@
+package aplication;
+
 import batalha.Batalha;
 import batalha.Terreno;
 import batalha.enums.TipoTerreno;

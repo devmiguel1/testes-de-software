@@ -12,6 +12,7 @@ import pokesal.Pokesal;
  * características do seu Pokesal.</p>
  */
 public class Treinador {
+  private final Random random = new Random();
   private String nome;
   private Pokesal pokesal;
   private Item[] itens = new Item[2];
@@ -63,10 +64,9 @@ public class Treinador {
    * Também verifica a possibilidade de um ataque crítico.</p>
    *
    * @param inimigo Pokesal que receberá o ataque
-   * @param bonus bônus aplicado ao ataque
+   * @param bonus   bônus aplicado ao ataque
    */
   public void ataquePokesal(Pokesal inimigo, double bonus) {
-    Random random = new Random();
     if (random.nextInt(1, 100) <= (inimigo.getDesvio() + pokesal.getErro())) {
       System.out.println("errou o golpe");
       return;
@@ -105,7 +105,7 @@ public class Treinador {
    *
    * @param indice posição do item que será utilizado
    * @throws IllegalStateException quando o treinador já utilizou
-   *         o limite de itens permitido na batalha
+   *                               o limite de itens permitido na batalha
    */
   public void usarItem(int indice) {
     if (itensUsados >= 2) {
