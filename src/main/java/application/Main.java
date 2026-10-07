@@ -1,4 +1,4 @@
-package aplication;
+package application;
 
 import batalha.Batalha;
 import batalha.Terreno;
