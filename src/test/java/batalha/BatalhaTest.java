@@ -12,23 +12,22 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pokesal.CharSal;
 import pokesal.SquirtSal;
+import treinador.GeradorAleatorio;
 import treinador.Treinador;
 
 public class BatalhaTest {
   private Treinador t1;
   private Treinador t2;
   private Terreno terreno;
+  private final GeradorAleatorio gerador = new GeradorAleatorio();
 
   @BeforeEach
   public void configurarCenario() {
-    t1 = new Treinador();
-    t1.setNome("Ronaldo");
-    t1.setPokesal(new CharSal());
+    t1 = new Treinador(gerador, "Ronaldo", new CharSal());
 
 
-    t2 = new Treinador();
-    t2.setNome("Rival");
-    t2.setPokesal(new SquirtSal());
+    t2 = new Treinador(gerador, "Rival", new SquirtSal());
+
 
     terreno = new Terreno();
 

@@ -11,15 +11,14 @@ import pokesal.CharSal;
 import pokesal.Pokesal;
 
 class TreinadorTest {
-
+  private final GeradorAleatorio gerador = new GeradorAleatorio();
   private Pokesal pokesal;
   private Treinador treinador;
 
   @BeforeEach
   void setUp() {
-    treinador = new Treinador();
     pokesal = new CharSal();
-    treinador.setPokesal(pokesal);
+    treinador = new Treinador(gerador, "Ronaldo", pokesal);
   }
 
   @ParameterizedTest

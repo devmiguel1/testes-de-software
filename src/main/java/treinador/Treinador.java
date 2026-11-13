@@ -1,7 +1,6 @@
 package treinador;
 
 import itens.Item;
-import java.util.Random;
 import pokesal.Pokesal;
 
 /**
@@ -12,11 +11,25 @@ import pokesal.Pokesal;
  * características do seu Pokesal.</p>
  */
 public class Treinador {
-  private final Random random = new Random();
+  private final GeradorAleatorioInterface gerador;
   private String nome;
   private Pokesal pokesal;
-  private Item[] itens = new Item[2];
+  private Item[] itens;
   private int itensUsados = 0;
+  
+
+  public Treinador(GeradorAleatorioInterface gerador, String nome, Pokesal pokesal,
+                   Item[] itens) {
+    this.gerador = gerador;
+    this.nome = nome;
+    this.pokesal = pokesal;
+    this.itens = itens;
+  }
+
+  public Treinador(GeradorAleatorioInterface gerador, String nome, Pokesal pokesal) {
+    this(gerador, nome, pokesal, new Item[2]);
+  }
+
 
   private void perkCritico() {
     pokesal.setCritico(pokesal.getCritico() + 10);
@@ -30,6 +43,7 @@ public class Treinador {
     pokesal.setDefMax(pokesal.getDef() + 5);
     pokesal.setDef(pokesal.getDef() + 5);
   }
+
 
   /**
    * Escolhe uma melhoria para aplicar ao Pokesal do treinador.
@@ -67,14 +81,14 @@ public class Treinador {
    * @param bonus   bônus aplicado ao ataque
    */
   public void ataquePokesal(Pokesal inimigo, double bonus) {
-    if (random.nextInt(1, 101) <= (inimigo.getDesvio() + pokesal.getErro())) {
+    if (gerador.gerarAletorio() < (inimigo.getDesvio() + pokesal.getErro())) {
       System.out.println("errou o golpe");
       return;
     }
 
     double dano = Math.max(1, pokesal.getAtk() * bonus) - inimigo.getDef();
 
-    if (random.nextInt(1, 101) <= pokesal.getCritico()) {
+    if (gerador.gerarAletorio() < pokesal.getCritico()) {
       System.out.println("Acertou um ataque critico");
       dano = dano * 2;
     }

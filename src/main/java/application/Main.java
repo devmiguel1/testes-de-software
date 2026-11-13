@@ -7,6 +7,7 @@ import itens.Item;
 import itens.Potion;
 import pokesal.CharSal;
 import pokesal.SquirtSal;
+import treinador.GeradorAleatorio;
 import treinador.Treinador;
 
 /**
@@ -21,17 +22,14 @@ public class Main {
    * @param args argumentos recebidos pela linha de comando
    */
   public static void main(String[] args) {
-    Treinador t1 = new Treinador();
-    t1.setNome("Ronaldo");
-    t1.setPokesal(new CharSal());
+    GeradorAleatorio gerador = new GeradorAleatorio();
+    Treinador t1 = new Treinador(gerador, "Ronaldo", new CharSal(),
+        new Item[] {new Potion(10), new Potion(10)});
     t1.escolhaDePerk(1);
-    t1.setItens(new Item[] {new Potion(10), new Potion(10)});
 
-    Treinador t2 = new Treinador();
-    t2.setNome("Rival");
-    t2.setPokesal(new SquirtSal());
+    Treinador t2 = new Treinador(gerador, "Rival", new SquirtSal(),
+        new Item[] {new Potion(10), new Potion(10)});
     t2.escolhaDePerk(2);
-    t2.setItens(new Item[] {new Potion(10), new Potion(10)});
 
     Terreno terreno = new Terreno();
     terreno.setTerreno(TipoTerreno.ASFALTO_QUENTE);
