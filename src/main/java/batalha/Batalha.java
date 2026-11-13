@@ -58,7 +58,7 @@ public class Batalha {
    * ou {@code true} quando a batalha deve continuar
    */
   public boolean executarTurno(Treinador t1, Treinador t2, Terreno terreno) {
-    turnos++;
+    turnos+=2;
     curarSeNecessario(t1);
     ataqueTurno(t1, t2, terreno);
     if (t2
