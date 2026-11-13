@@ -1,5 +1,6 @@
 package pokesal;
 
+import golpe.Golpe;
 import pokesal.enums.TipoElemental;
 
 /**
@@ -26,5 +27,6 @@ public class TotoSal extends Pokesal {
     setSpd(43);
     setTipo(TipoElemental.AGUA);
     setEnvenenado(false);
+    setGolpe(new Golpe("Agua", 95));
   }
 }

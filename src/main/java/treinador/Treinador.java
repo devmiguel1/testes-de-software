@@ -16,7 +16,7 @@ public class Treinador {
   private Pokesal pokesal;
   private Item[] itens;
   private int itensUsados = 0;
-  
+
 
   public Treinador(GeradorAleatorioInterface gerador, String nome, Pokesal pokesal,
                    Item[] itens) {
@@ -81,7 +81,11 @@ public class Treinador {
    * @param bonus   bônus aplicado ao ataque
    */
   public void ataquePokesal(Pokesal inimigo, double bonus) {
-    if (gerador.gerarAletorio() < (inimigo.getDesvio() + pokesal.getErro())) {
+    double chanceAcerto = pokesal
+        .getGolpe()
+        .getPrecisao() - inimigo.getDesvio();
+
+    if (gerador.gerarAletorio() >= chanceAcerto) {
       System.out.println("errou o golpe");
       return;
     }
@@ -90,7 +94,7 @@ public class Treinador {
 
     if (gerador.gerarAletorio() < pokesal.getCritico()) {
       System.out.println("Acertou um ataque critico");
-      dano = dano * 2;
+      dano = dano * 1.5;
     }
     inimigo.setHp(inimigo.getHp() - dano);
   }

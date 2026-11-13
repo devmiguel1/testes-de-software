@@ -1,5 +1,6 @@
 package pokesal;
 
+import golpe.Golpe;
 import pokesal.enums.TipoElemental;
 
 /**
@@ -26,5 +27,6 @@ public class ChikoSal extends Pokesal {
     setSpd(45);
     setTipo(TipoElemental.PLANTA);
     setEnvenenado(false);
+    setGolpe(new Golpe("Planta", 95));
   }
 }

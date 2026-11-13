@@ -33,7 +33,8 @@ public class BatalhaTest {
 
     t1
         .getPokesal()
-        .setErro(0);
+        .setPrecisao(100);
+    
     t1
         .getPokesal()
         .setDesvio(0);
@@ -44,7 +45,7 @@ public class BatalhaTest {
 
     t2
         .getPokesal()
-        .setErro(0);
+        .setPrecisao(100);
     t2
         .getPokesal()
         .setDesvio(0);

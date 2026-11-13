@@ -1,5 +1,6 @@
 package pokesal;
 
+import golpe.Golpe;
 import pokesal.enums.TipoElemental;
 
 /**
@@ -19,12 +20,13 @@ public class BulbaSal extends Pokesal {
     setNome("BulbaSal");
     setHp(45);
     setHpMax(45);
-    setAtk(12);
     setAtkMax(12);
+    setAtk(12);
     setDefMax(4);
     setDef(4);
     setSpd(45);
     setTipo(TipoElemental.PLANTA);
     setEnvenenado(false);
+    setGolpe(new Golpe("Planta", 95));
   }
 }

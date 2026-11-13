@@ -1,5 +1,6 @@
 package pokesal;
 
+import golpe.Golpe;
 import pokesal.enums.TipoElemental;
 
 /**
@@ -18,11 +19,12 @@ public abstract class Pokesal {
   private double atk;
   private double def;
   private double spd;
-  private double erro = 5;
   private double desvio = 5;
-  private double critico = 5;
+  private double critico = 6.25;
   private TipoElemental tipo;
   private boolean envenenado;
+  private Golpe golpe;
+
 
   /**
    * Realiza um ataque básico contra outro Pokesal.
@@ -42,6 +44,18 @@ public abstract class Pokesal {
 
   public void setEnvenenado(boolean envenenado) {
     this.envenenado = envenenado;
+  }
+
+  public Golpe getGolpe() {
+    return golpe;
+  }
+
+  public void setGolpe(Golpe golpe) {
+    this.golpe = golpe;
+  }
+
+  public void setPrecisao(int numero) {
+    golpe.setPrecisao(numero);
   }
 
   public TipoElemental getTipo() {
@@ -153,14 +167,6 @@ public abstract class Pokesal {
 
   public void setDesvio(double desvio) {
     this.desvio = desvio;
-  }
-
-  public double getErro() {
-    return erro;
-  }
-
-  public void setErro(double erro) {
-    this.erro = erro;
   }
 
   public double getCritico() {

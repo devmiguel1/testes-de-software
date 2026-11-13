@@ -1,5 +1,6 @@
 package pokesal;
 
+import golpe.Golpe;
 import pokesal.enums.TipoElemental;
 
 /**
@@ -26,5 +27,6 @@ public class CharSal extends Pokesal {
     setSpd(65);
     setTipo(TipoElemental.FOGO);
     setEnvenenado(false);
+    setGolpe(new Golpe("Fogo", 95));
   }
 }
