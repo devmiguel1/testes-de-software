@@ -12,6 +12,10 @@ import treinador.Treinador;
  */
 public class Batalha {
 
+  private int turnos = 0;
+  private Treinador vencedor;
+  private Treinador perdedor;
+
   /**
    * Inicia uma batalha entre dois treinadores.
    *
@@ -23,7 +27,7 @@ public class Batalha {
    * @param t2      segundo treinador que participa da batalha
    * @param terreno terreno utilizado durante a batalha
    */
-  public void iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
+  public RepositorioResultados iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
     boolean vida = true;
     while (vida) {
       if (t1
@@ -36,6 +40,7 @@ public class Batalha {
         vida = executarTurno(t1, t2, terreno);
       }
     }
+    return new RepositorioResultados(vencedor.getNome(), perdedor.getNome(), turnos, vencedor.getPokesal().getNome(), perdedor.getPokesal().getNome());
   }
 
   /**
@@ -53,6 +58,7 @@ public class Batalha {
    * ou {@code true} quando a batalha deve continuar
    */
   public boolean executarTurno(Treinador t1, Treinador t2, Terreno terreno) {
+    turnos++;
     curarSeNecessario(t1);
     ataqueTurno(t1, t2, terreno);
     if (t2
@@ -62,6 +68,8 @@ public class Batalha {
           .getPokesal()
           .getNome() + " nao aguentou mais!");
       System.out.println(t1.getNome() + " ganhou a batalha!");
+      vencedor = t1;
+      perdedor = t2;
       return false;
     }
 
@@ -74,6 +82,8 @@ public class Batalha {
           .getPokesal()
           .getNome() + " nao aguentou mais!");
       System.out.println(t2.getNome() + " ganhou a batalha!");
+      vencedor = t2;
+      perdedor = t1;
       return false;
     }
 
@@ -167,5 +177,9 @@ public class Batalha {
         System.out.println(e.getMessage());
       }
     }
+  }
+
+  public int getTurnos() {
+    return turnos;
   }
 }
