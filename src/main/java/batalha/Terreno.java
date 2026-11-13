@@ -1,64 +1,47 @@
 package batalha;
 
-import static batalha.enums.TipoTerreno.ASFALTO_QUENTE;
-import static batalha.enums.TipoTerreno.CANTEIRO_CENTRAL;
-import static batalha.enums.TipoTerreno.PISO_ESCORREGADIO;
-
 import batalha.enums.TipoTerreno;
 import pokesal.Pokesal;
-import pokesal.enums.TipoElemental;
 import treinador.Treinador;
 
-/**
- * Representa o terreno onde a batalha está acontecendo.
- *
- * <p>É responsável por calcular os bônus de ataque de acordo com
- * o tipo do Pokesal e o terreno, além de aplicar efeitos específicos
- * ao final de cada turno.</p>
- */
 public class Terreno {
-  private TipoTerreno tipoterreno;
 
-  /**
-   * Calcula o bônus de ataque considerando o tipo do Pokesal
-   * atacante e o tipo do Pokesal defensor.
-   *
-   * <p>O bônus pode aumentar ou diminuir de acordo com a vantagem
-   * ou desvantagem entre os tipos elementais. Depois disso, o bônus
-   * específico do terreno também é aplicado ao resultado.</p>
-   *
-   * @param atacante treinador que está realizando o ataque
-   * @param defensor treinador que está recebendo o ataque
-   * @return multiplicador final do bônus do ataque
-   */
+  private TipoTerreno tipoterreno;
+  private final ServicoTerreno servicoTerreno;
+
+  public Terreno(ServicoTerreno servicoTerreno) {
+    this.servicoTerreno = servicoTerreno;
+  }
+
   public double bonus(Treinador atacante, Treinador defensor) {
 
     Pokesal pokeAtacante = atacante.getPokesal();
     Pokesal pokeDefensor = defensor.getPokesal();
+
     double bonusTipo = 1.0;
 
     switch (pokeAtacante.getTipo()) {
 
       case FOGO:
-        if (pokeDefensor.getTipo() == TipoElemental.PLANTA) {
+        if (pokeDefensor.getTipo() == pokesal.enums.TipoElemental.PLANTA) {
           bonusTipo = 2.0;
-        } else if (pokeDefensor.getTipo() == TipoElemental.AGUA) {
+        } else if (pokeDefensor.getTipo() == pokesal.enums.TipoElemental.AGUA) {
           bonusTipo = 0.5;
         }
         break;
 
       case AGUA:
-        if (pokeDefensor.getTipo() == TipoElemental.FOGO) {
+        if (pokeDefensor.getTipo() == pokesal.enums.TipoElemental.FOGO) {
           bonusTipo = 2.0;
-        } else if (pokeDefensor.getTipo() == TipoElemental.PLANTA) {
+        } else if (pokeDefensor.getTipo() == pokesal.enums.TipoElemental.PLANTA) {
           bonusTipo = 0.5;
         }
         break;
 
       case PLANTA:
-        if (pokeDefensor.getTipo() == TipoElemental.AGUA) {
+        if (pokeDefensor.getTipo() == pokesal.enums.TipoElemental.AGUA) {
           bonusTipo = 2.0;
-        } else if (pokeDefensor.getTipo() == TipoElemental.FOGO) {
+        } else if (pokeDefensor.getTipo() == pokesal.enums.TipoElemental.FOGO) {
           bonusTipo = 0.5;
         }
         break;
@@ -67,43 +50,12 @@ public class Terreno {
         break;
     }
 
-    return bonusTipo * bonusTerreno(pokeAtacante);
+    return bonusTipo
+            * servicoTerreno.bonusTerreno(tipoterreno, pokeAtacante);
   }
 
-  /**
-   * Aplica o efeito do terreno ao final do turno.
-   *
-   * <p>Quando o terreno é um ASFALTO QUENTE e o Pokesal é do tipo
-   * Fogo, ele ganha um bonus de 1,15 no dano. E Quando o terreno é um PISO ESCORREGADIO e o Pokesal
-   * é do tipo Agua, ele ganha um bonus de 1,10 no dano.</p>
-   *
-   * @param pokeAtacante Pokesal que receberá o efeito do terreno
-   * @return multiplicador do bônus do ataque
-   */
-  public double bonusTerreno(Pokesal pokeAtacante) {
-    if (tipoterreno == ASFALTO_QUENTE && pokeAtacante.getTipo() == TipoElemental.FOGO) {
-      return 1.15;
-    }
-    if (tipoterreno == PISO_ESCORREGADIO && pokeAtacante.getTipo() == TipoElemental.AGUA) {
-      return 1.10;
-    }
-    return 1.0;
-  }
-
-  /**
-   * Aplica o efeito do terreno ao final do turno.
-   *
-   * <p>Quando o terreno é um canteiro central e o Pokesal é do tipo
-   * Planta e ainda possui HP, ele recupera 5% do seu HP máximo.</p>
-   *
-   * @param pokesal Pokesal que receberá o efeito do terreno
-   */
   public void efeitoFimDeTurno(Pokesal pokesal) {
-    if (tipoterreno == CANTEIRO_CENTRAL && pokesal.getTipo() == TipoElemental.PLANTA
-        &&
-        pokesal.getHp() > 0) {
-      pokesal.setHp(pokesal.getHp() + pokesal.getHpMax() * 0.05);
-    }
+    servicoTerreno.efeitoFimDeTurno(tipoterreno, pokesal);
   }
 
   public TipoTerreno getTerreno() {

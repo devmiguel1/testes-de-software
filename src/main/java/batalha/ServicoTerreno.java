@@ -3,6 +3,7 @@ package batalha;
 import java.time.Clock;
 import java.time.LocalTime;
 
+import batalha.enums.TipoClima;
 import batalha.enums.TipoTerreno;
 import pokesal.Pokesal;
 import pokesal.enums.TipoElemental;
@@ -10,9 +11,11 @@ import pokesal.enums.TipoElemental;
 public class ServicoTerreno {
 
     private final Clock clock;
+    private final TipoClima clima;
 
-    public ServicoTerreno(Clock clock) {
+    public ServicoTerreno(Clock clock, TipoClima clima) {
         this.clock = clock;
+        this.clima = clima;
     }
 
     public double bonusTerreno(TipoTerreno terreno, Pokesal pokeAtacante) {
@@ -24,12 +27,14 @@ public class ServicoTerreno {
 
         if (terreno == TipoTerreno.ASFALTO_QUENTE
                 && pokeAtacante.getTipo() == TipoElemental.FOGO
-                && duranteODia) {
+                && duranteODia
+                && clima == TipoClima.ENSOLARADO) {
             return 1.15;
         }
 
         if (terreno == TipoTerreno.PISO_ESCORREGADIO
-                && pokeAtacante.getTipo() == TipoElemental.AGUA) {
+                && pokeAtacante.getTipo() == TipoElemental.AGUA
+                && clima == TipoClima.CHUVOSO) {
             return 1.10;
         }
 
@@ -40,7 +45,8 @@ public class ServicoTerreno {
 
         if (terreno == TipoTerreno.CANTEIRO_CENTRAL
                 && pokesal.getTipo() == TipoElemental.PLANTA
-                && pokesal.getHp() > 0) {
+                && pokesal.getHp() > 0
+                && clima != TipoClima.TEMPESTADE) {
 
             pokesal.setHp(
                     pokesal.getHp() + pokesal.getHpMax() * 0.05

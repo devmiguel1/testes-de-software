@@ -18,7 +18,7 @@ import treinador.Treinador;
 public class BatalhaTest {
   private Treinador t1;
   private Treinador t2;
-  private Terreno terreno;
+  private batalha.Terreno terreno;
   private final GeradorAleatorio gerador = new GeradorAleatorio();
 
   @BeforeEach
@@ -29,7 +29,7 @@ public class BatalhaTest {
     t2 = new Treinador(gerador, "Rival", new SquirtSal());
 
 
-    terreno = new Terreno();
+    terreno = new batalha.Terreno();
 
     t1
         .getPokesal()
