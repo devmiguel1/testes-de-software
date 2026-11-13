@@ -67,14 +67,14 @@ public class Treinador {
    * @param bonus   bônus aplicado ao ataque
    */
   public void ataquePokesal(Pokesal inimigo, double bonus) {
-    if (random.nextInt(1, 100) <= (inimigo.getDesvio() + pokesal.getErro())) {
+    if (random.nextInt(1, 101) <= (inimigo.getDesvio() + pokesal.getErro())) {
       System.out.println("errou o golpe");
       return;
     }
 
     double dano = Math.max(1, pokesal.getAtk() * bonus) - inimigo.getDef();
 
-    if (random.nextInt(1, 100) <= pokesal.getCritico()) {
+    if (random.nextInt(1, 101) <= pokesal.getCritico()) {
       System.out.println("Acertou um ataque critico");
       dano = dano * 2;
     }

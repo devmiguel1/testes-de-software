@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Batalha.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">projetoTestes</a> &gt; <a href="index.source.html" class="el_package">batalha</a> &gt; <span class="el_source">Batalha.java</span></div><h1>Batalha.java</h1><pre class="source lang-java linenums">package batalha;
+
+import java.util.Scanner;
+import treinador.Treinador;
+
+/**
+ * Representa e gerencia uma batalha entre dois treinadores.
+ *
+ * &lt;p&gt;Controla a ordem dos turnos, os ataques, o uso de itens,
+ * a aplicação do bônus do terreno e a verificação das condições
+ * de vitória e derrota.&lt;/p&gt;
+ */
+<span class="fc" id="L13">public class Batalha {</span>
+
+  /**
+   * Inicia uma batalha entre dois treinadores.
+   *
+   * &lt;p&gt;A ordem dos ataques é determinada pela velocidade dos
+   * Pokésais de cada treinador. A batalha continua enquanto
+   * nenhum dos dois treinadores for derrotado.&lt;/p&gt;
+   *
+   * @param t1      treinador que participa da batalha
+   * @param t2      segundo treinador que participa da batalha
+   * @param terreno terreno utilizado durante a batalha
+   */
+  public void iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
+<span class="fc" id="L27">    boolean vida = true;</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">    while (vida) {</span>
+<span class="fc" id="L29">      if (t1</span>
+<span class="fc" id="L30">          .getPokesal()</span>
+<span class="fc" id="L31">          .getSpd() &lt; t2</span>
+<span class="fc" id="L32">          .getPokesal()</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">          .getSpd()) {</span>
+<span class="nc" id="L34">        vida = executarTurno(t2, t1, terreno);</span>
+      } else {
+<span class="fc" id="L36">        vida = executarTurno(t1, t2, terreno);</span>
+      }
+    }
+<span class="fc" id="L39">  }</span>
+
+  /**
+   * Executa um turno completo da batalha entre dois treinadores.
+   *
+   * &lt;p&gt;Antes de cada ataque, verifica se o treinador precisa
+   * utilizar uma Potion. Em seguida, realiza o ataque e verifica
+   * se o treinador defensor foi derrotado. Caso nenhum treinador
+   * seja derrotado, o segundo treinador também realiza seu ataque.&lt;/p&gt;
+   *
+   * @param t1      treinador que realiza o primeiro ataque
+   * @param t2      treinador que recebe o primeiro ataque
+   * @param terreno terreno utilizado para calcular o bônus do ataque
+   * @return {@code false} quando um dos treinadores é derrotado,
+   * ou {@code true} quando a batalha deve continuar
+   */
+  public boolean executarTurno(Treinador t1, Treinador t2, Terreno terreno) {
+<span class="fc" id="L56">    curarSeNecessario(t1);</span>
+<span class="fc" id="L57">    ataqueTurno(t1, t2, terreno);</span>
+<span class="fc" id="L58">    if (t2</span>
+<span class="fc" id="L59">        .getPokesal()</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        .getHp() &lt;= 0) {</span>
+<span class="fc" id="L61">      System.out.println(t2</span>
+<span class="fc" id="L62">          .getPokesal()</span>
+<span class="fc" id="L63">          .getNome() + &quot; nao aguentou mais!&quot;);</span>
+<span class="fc" id="L64">      System.out.println(t1.getNome() + &quot; ganhou a batalha!&quot;);</span>
+<span class="fc" id="L65">      return false;</span>
+    }
+
+<span class="nc" id="L68">    curarSeNecessario(t2);</span>
+<span class="nc" id="L69">    ataqueTurno(t2, t1, terreno);</span>
+<span class="nc" id="L70">    if (t1</span>
+<span class="nc" id="L71">        .getPokesal()</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        .getHp() &lt;= 0) {</span>
+<span class="nc" id="L73">      System.out.println(t1</span>
+<span class="nc" id="L74">          .getPokesal()</span>
+<span class="nc" id="L75">          .getNome() + &quot; nao aguentou mais!&quot;);</span>
+<span class="nc" id="L76">      System.out.println(t2.getNome() + &quot; ganhou a batalha!&quot;);</span>
+<span class="nc" id="L77">      return false;</span>
+    }
+
+<span class="nc" id="L80">    return true;</span>
+  }
+
+  /**
+   * Permite que o treinador escolha um item da lista de itens
+   * para ser utilizado durante a batalha.
+   *
+   * @param treinador treinador que irá escolher e utilizar o item
+   */
+  private void escolhaItem(Treinador treinador) {
+<span class="nc" id="L90">    Scanner sc = new Scanner(System.in);</span>
+<span class="nc" id="L91">    treinador.listarItens();</span>
+
+<span class="nc" id="L93">    System.out.println(&quot;Ecolha o Item: &quot;);</span>
+<span class="nc" id="L94">    int escolha = Integer.parseInt(sc</span>
+<span class="nc" id="L95">        .nextLine()</span>
+<span class="nc" id="L96">        .trim());</span>
+<span class="nc" id="L97">    treinador.usarItem(escolha - 1);</span>
+<span class="nc" id="L98">  }</span>
+
+  /**
+   * Executa o ataque de um treinador contra outro.
+   *
+   * &lt;p&gt;Primeiro calcula o bônus fornecido pelo terreno e registra
+   * o HP do defensor antes do ataque. Depois realiza o ataque,
+   * calcula o dano causado e exibe as informações do ataque
+   * e do HP restante.&lt;/p&gt;
+   *
+   * @param atacante treinador responsável por realizar o ataque
+   * @param defensor treinador que recebe o ataque
+   * @param terreno  terreno utilizado para calcular o bônus do ataque
+   */
+  private void ataqueTurno(Treinador atacante, Treinador defensor, Terreno terreno) {
+<span class="fc" id="L113">    double bonus = terreno.bonus(atacante, defensor);</span>
+<span class="fc" id="L114">    double hpAntes = defensor</span>
+<span class="fc" id="L115">        .getPokesal()</span>
+<span class="fc" id="L116">        .getHp();</span>
+
+<span class="fc" id="L118">    System.out.println(atacante</span>
+<span class="fc" id="L119">        .getPokesal()</span>
+<span class="fc" id="L120">        .getNome() + &quot; atacou &quot; + defensor</span>
+<span class="fc" id="L121">        .getPokesal()</span>
+<span class="fc" id="L122">        .getNome());</span>
+<span class="fc" id="L123">    atacante.ataquePokesal(defensor.getPokesal(), bonus);</span>
+
+<span class="fc" id="L125">    double dano = hpAntes - defensor</span>
+<span class="fc" id="L126">        .getPokesal()</span>
+<span class="fc" id="L127">        .getHp();</span>
+<span class="fc" id="L128">    System.out.printf(&quot;dano: %.2f %n&quot;, dano);</span>
+<span class="fc" id="L129">    System.out.printf(&quot;HP de %s: %.2f%n&quot;, defensor</span>
+<span class="fc" id="L130">        .getPokesal()</span>
+<span class="fc" id="L131">        .getNome(), defensor</span>
+<span class="fc" id="L132">        .getPokesal()</span>
+<span class="fc" id="L133">        .getHp());</span>
+<span class="fc" id="L134">    System.out.println();</span>
+<span class="fc" id="L135">  }</span>
+
+  /**
+   * Verifica se o Pokésal do treinador precisa ser curado.
+   *
+   * &lt;p&gt;A cura é realizada quando o HP atual é maior que zero
+   * e menor ou igual à metade do HP máximo. Nesse caso, o método
+   * tenta utilizar o primeiro item disponível. Caso o item não
+   * possa ser utilizado, a mensagem da exceção é exibida.&lt;/p&gt;
+   *
+   * @param treinador treinador que terá o HP verificado
+   */
+  private void curarSeNecessario(Treinador treinador) {
+<span class="fc" id="L148">    double metade = treinador</span>
+<span class="fc" id="L149">        .getPokesal()</span>
+<span class="fc" id="L150">        .getHpMax() / 2;</span>
+<span class="fc" id="L151">    if (treinador</span>
+<span class="fc" id="L152">        .getPokesal()</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">        .getHp() &gt; 0 &amp;&amp; treinador</span>
+<span class="fc" id="L154">        .getPokesal()</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        .getHp() &lt;= metade) {</span>
+      try {
+<span class="nc" id="L157">        treinador.usarItem(0);</span>
+<span class="nc" id="L158">        System.out.println(treinador.getNome() + &quot; usou uma Potion em &quot; + treinador</span>
+<span class="nc" id="L159">            .getPokesal()</span>
+<span class="nc" id="L160">            .getNome());</span>
+<span class="nc" id="L161">        System.out.printf(&quot;HP de %s agora: %.2f%n&quot;, treinador</span>
+<span class="nc" id="L162">            .getPokesal()</span>
+<span class="nc" id="L163">            .getNome(), treinador</span>
+<span class="nc" id="L164">            .getPokesal()</span>
+<span class="nc" id="L165">            .getHp());</span>
+<span class="nc" id="L166">      } catch (IllegalStateException e) {</span>
+<span class="nc" id="L167">        System.out.println(e.getMessage());</span>
+<span class="nc" id="L168">      }</span>
+    }
+<span class="fc" id="L170">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
