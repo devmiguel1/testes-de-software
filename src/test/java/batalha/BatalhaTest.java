@@ -4,9 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import batalha.enums.TipoClima;
 import batalha.enums.TipoTerreno;
 import itens.Item;
 import itens.Potion;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +22,7 @@ import treinador.Treinador;
 public class BatalhaTest {
   private Treinador t1;
   private Treinador t2;
-  private batalha.Terreno terreno;
+  private Terreno terreno;
   private final GeradorAleatorio gerador = new GeradorAleatorio();
 
   @BeforeEach
@@ -29,12 +33,16 @@ public class BatalhaTest {
     t2 = new Treinador(gerador, "Rival", new SquirtSal());
 
 
-    terreno = new batalha.Terreno();
+    // Relógio fixo ao meio-dia e clima ensolarado: o Asfalto Quente fica ativo
+    ServicoTerreno servicoTerreno = new ServicoTerreno(
+        Clock.fixed(Instant.parse("2026-11-13T12:00:00Z"), ZoneOffset.UTC),
+        TipoClima.ENSOLARADO);
+    terreno = new Terreno(servicoTerreno);
 
     t1
         .getPokesal()
         .setPrecisao(100);
-    
+
     t1
         .getPokesal()
         .setDesvio(0);
@@ -92,7 +100,10 @@ public class BatalhaTest {
   @DisplayName("Teste sobre a prioridade de ataque de acordo com a velocidade de ataque dos " +
       "pokesals")
   public void testOrdemDeAtaquePorVelocidade() {
-    Batalha batalha = new Batalha();
+    ServicoRecompensa servicoRecompensa = new ServicoRecompensa(() -> 0);
+    ServicoNotificacao servicoNotificacao = new ServicoNotificacao(resultado -> {
+    });
+    Batalha batalha = new Batalha(servicoRecompensa, servicoNotificacao);
     terreno.setTerreno(TipoTerreno.CANTEIRO_CENTRAL);
 
     t1

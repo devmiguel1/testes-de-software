@@ -12,24 +12,38 @@ import treinador.Treinador;
  */
 public class Batalha {
 
+  private final ServicoRecompensa servicoRecompensa;
+  private final ServicoNotificacao servicoNotificacao;
 
-  private Treinador vencedor;
-  private Treinador perdedor;
+  /**
+   * Cria uma batalha com os serviços de recompensa e notificação.
+   *
+   * @param servicoRecompensa  serviço que concede pontos ao vencedor
+   * @param servicoNotificacao serviço que notifica o resultado da batalha
+   */
+  public Batalha(ServicoRecompensa servicoRecompensa,
+                 ServicoNotificacao servicoNotificacao) {
+    this.servicoRecompensa = servicoRecompensa;
+    this.servicoNotificacao = servicoNotificacao;
+  }
 
   /**
    * Inicia uma batalha entre dois treinadores.
    *
    * <p>A ordem dos ataques é determinada pela velocidade dos
    * Pokésais de cada treinador. A batalha continua enquanto
-   * nenhum dos dois treinadores for derrotado.</p>
+   * nenhum dos dois treinadores for derrotado. Ao final, o vencedor
+   * recebe a recompensa e o resultado é notificado.</p>
    *
    * @param t1      treinador que participa da batalha
    * @param t2      segundo treinador que participa da batalha
    * @param terreno terreno utilizado durante a batalha
+   * @return resultado com vencedor, perdedor, turnos e Pokésal utilizados
    */
   public ResultadoBatalha iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
     int turnos = 0;
     boolean vida = true;
+
     while (vida) {
       turnos += 2;
       if (t1
@@ -42,11 +56,29 @@ public class Batalha {
         vida = executarTurno(t1, t2, terreno);
       }
     }
-    return new ResultadoBatalha(vencedor.getNome(), perdedor.getNome(), turnos, vencedor
+
+    Treinador vencedor = t1
         .getPokesal()
-        .getNome(), perdedor
-        .getPokesal()
-        .getNome());
+        .getHp() > 0 ? t1 : t2;
+    Treinador perdedor = vencedor == t1 ? t2 : t1;
+
+    int pontos = servicoRecompensa.concederRecompensa(vencedor);
+    System.out.println(vencedor.getNome() + " recebeu " + pontos + " pontos de recompensa!");
+
+    ResultadoBatalha resultado = new ResultadoBatalha(
+        vencedor.getNome(),
+        perdedor.getNome(),
+        turnos,
+        vencedor
+            .getPokesal()
+            .getNome(),
+        perdedor
+            .getPokesal()
+            .getNome());
+
+    servicoNotificacao.notificar(resultado);
+
+    return resultado;
   }
 
   /**
@@ -73,8 +105,6 @@ public class Batalha {
           .getPokesal()
           .getNome() + " nao aguentou mais!");
       System.out.println(t1.getNome() + " ganhou a batalha!");
-      vencedor = t1;
-      perdedor = t2;
       return false;
     }
 
@@ -87,8 +117,6 @@ public class Batalha {
           .getPokesal()
           .getNome() + " nao aguentou mais!");
       System.out.println(t2.getNome() + " ganhou a batalha!");
-      vencedor = t2;
-      perdedor = t1;
       return false;
     }
 
