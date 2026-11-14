@@ -2,7 +2,8 @@ package batalha;
 
 import java.util.Scanner;
 import treinador.Treinador;
-
+import batalha.ServicoRecompensa;
+import batalha.ServicoNotificacao;
 /**
  * Representa e gerencia uma batalha entre dois treinadores.
  *
@@ -15,7 +16,16 @@ public class Batalha {
   private int turnos = 0;
   private Treinador vencedor;
   private Treinador perdedor;
+  private final ServicoRecompensa servicoRecompensa;
+  private final ServicoNotificacao servicoNotificacao;
 
+  public Batalha(
+          ServicoRecompensa servicoRecompensa,
+          ServicoNotificacao servicoNotificacao) {
+
+    this.servicoRecompensa = servicoRecompensa;
+    this.servicoNotificacao = servicoNotificacao;
+  }
   /**
    * Inicia uma batalha entre dois treinadores.
    *
@@ -27,20 +37,36 @@ public class Batalha {
    * @param t2      segundo treinador que participa da batalha
    * @param terreno terreno utilizado durante a batalha
    */
-  public RepositorioResultados iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
+  public RepositorioResultados iniciarBatalha(
+          Treinador t1, Treinador t2, Terreno terreno) {
+
     boolean vida = true;
+
     while (vida) {
-      if (t1
-          .getPokesal()
-          .getSpd() < t2
-          .getPokesal()
-          .getSpd()) {
+      if (t1.getPokesal().getSpd() < t2.getPokesal().getSpd()) {
         vida = executarTurno(t2, t1, terreno);
       } else {
         vida = executarTurno(t1, t2, terreno);
       }
     }
-    return new RepositorioResultados(vencedor.getNome(), perdedor.getNome(), turnos, vencedor.getPokesal().getNome(), perdedor.getPokesal().getNome());
+
+    int pontos = servicoRecompensa.concederRecompensa(vencedor);
+
+    System.out.println(
+            vencedor.getNome() + " recebeu " + pontos + " pontos de recompensa!"
+    );
+
+    RepositorioResultados resultado = new RepositorioResultados(
+            vencedor.getNome(),
+            perdedor.getNome(),
+            turnos,
+            vencedor.getPokesal().getNome(),
+            perdedor.getPokesal().getNome()
+    );
+
+    servicoNotificacao.notificar(resultado);
+
+    return resultado;
   }
 
   /**

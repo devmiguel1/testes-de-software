@@ -16,6 +16,7 @@ public class Treinador {
   private Pokesal pokesal;
   private Item[] itens;
   private int itensUsados = 0;
+  private int pontos = 0;
 
 
   public Treinador(GeradorAleatorioInterface gerador, String nome, Pokesal pokesal,
@@ -29,6 +30,17 @@ public class Treinador {
   public Treinador(GeradorAleatorioInterface gerador, String nome, Pokesal pokesal) {
     this(gerador, nome, pokesal, new Item[2]);
   }
+
+  public void adicionarPontos(int pontos) {
+    if (pontos < 0) {
+      throw new IllegalArgumentException(
+              "Os pontos nao podem ser negativos."
+      );
+    }
+
+    this.pontos += pontos;
+  }
+
 
 
   private void perkCritico() {
@@ -170,5 +182,9 @@ public class Treinador {
 
   public void setPokesal(Pokesal pokesal) {
     this.pokesal = pokesal;
+  }
+
+  public int getPontos() {
+    return pontos;
   }
 }
