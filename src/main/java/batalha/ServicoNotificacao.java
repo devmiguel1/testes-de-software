@@ -8,7 +8,7 @@ public class ServicoNotificacao {
     this.notificador = notificador;
   }
 
-  public void notificar(ResultadoBatalha resultado) {
+  public void notificar(RepositorioResultados resultado) {
 
     if (resultado == null) {
       throw new IllegalArgumentException(

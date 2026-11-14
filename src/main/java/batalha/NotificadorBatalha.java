@@ -2,6 +2,6 @@ package batalha;
 
 public interface NotificadorBatalha {
 
-  void notificarResultado(ResultadoBatalha resultado);
+  void notificarResultado(RepositorioResultados resultado);
 
 }

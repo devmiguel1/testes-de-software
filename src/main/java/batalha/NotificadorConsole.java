@@ -3,7 +3,7 @@ package batalha;
 public class NotificadorConsole implements NotificadorBatalha {
 
   @Override
-  public void notificarResultado(ResultadoBatalha resultado) {
+  public void notificarResultado(RepositorioResultados resultado) {
 
     if (resultado == null) {
       throw new IllegalArgumentException(
