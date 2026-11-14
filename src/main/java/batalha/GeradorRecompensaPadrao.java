@@ -13,6 +13,6 @@ public class GeradorRecompensaPadrao implements GeradorRecompensa {
 
     @Override
     public int gerarPontos() {
-        return (int) (gerador.gerarAletorio() * 51) + 50;
+        return (int) (gerador.gerarAletorio()) + 50;
     }
 }
