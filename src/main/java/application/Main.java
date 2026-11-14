@@ -2,12 +2,14 @@ package application;
 
 import batalha.Batalha;
 import batalha.RepositorioResultados;
+import batalha.ServicoTerreno;
 import batalha.Terreno;
+import batalha.enums.TipoClima;
 import batalha.enums.TipoTerreno;
 import itens.Item;
 import itens.Potion;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Clock;
+import java.time.ZoneId;
 import pokesal.CharSal;
 import pokesal.SquirtSal;
 import treinador.GeradorAleatorio;
@@ -25,9 +27,9 @@ public class Main {
    * @param args argumentos recebidos pela linha de comando
    */
   public static void main(String[] args) {
-
-    List<RepositorioResultados> batalhas = new ArrayList<RepositorioResultados>();
-
+    RepositorioResultados repositorio = new RepositorioResultados();
+    ServicoTerreno servicoTerreno =
+        new ServicoTerreno(Clock.system(ZoneId.of("America/Bahia")), TipoClima.ENSOLARADO);
     GeradorAleatorio gerador = new GeradorAleatorio();
     Treinador t1 = new Treinador(gerador, "Ronaldo", new CharSal(),
         new Item[] {new Potion(10), new Potion(10)});
@@ -37,10 +39,12 @@ public class Main {
         new Item[] {new Potion(10), new Potion(10)});
     t2.escolhaDePerk(2);
 
-    Terreno terreno = new Terreno();
+    Terreno terreno = new Terreno(servicoTerreno);
     terreno.setTerreno(TipoTerreno.ASFALTO_QUENTE);
 
-    batalhas.add(new Batalha().iniciarBatalha(t1, t2, terreno));
-    batalhas.get(0).getRegistro();
+    repositorio.salvarResultado(new Batalha().iniciarBatalha(t1, t2, terreno));
+    repositorio.batalhas
+        .get(0)
+        .getRegistro();
   }
 }
