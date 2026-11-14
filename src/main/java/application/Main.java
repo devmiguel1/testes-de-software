@@ -1,6 +1,7 @@
 package application;
 
 import batalha.Batalha;
+import batalha.RegistroList;
 import batalha.RepositorioResultados;
 import batalha.ServicoTerreno;
 import batalha.Terreno;
@@ -27,7 +28,7 @@ public class Main {
    * @param args argumentos recebidos pela linha de comando
    */
   public static void main(String[] args) {
-    RepositorioResultados repositorio = new RepositorioResultados();
+    RegistroList repositorio = new RegistroList();
     ServicoTerreno servicoTerreno =
         new ServicoTerreno(Clock.system(ZoneId.of("America/Bahia")), TipoClima.ENSOLARADO);
     GeradorAleatorio gerador = new GeradorAleatorio();
@@ -43,7 +44,7 @@ public class Main {
     terreno.setTerreno(TipoTerreno.ASFALTO_QUENTE);
 
     repositorio.salvarResultado(new Batalha().iniciarBatalha(t1, t2, terreno));
-    repositorio.batalhas
+    repositorio.getBatalhas()
         .get(0)
         .getRegistro();
   }

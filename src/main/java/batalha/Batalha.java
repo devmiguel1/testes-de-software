@@ -1,5 +1,6 @@
 package batalha;
 
+import java.util.List;
 import java.util.Scanner;
 import treinador.Treinador;
 
@@ -27,22 +28,49 @@ public class Batalha {
    * @param t2      segundo treinador que participa da batalha
    * @param terreno terreno utilizado durante a batalha
    */
-  public ResultadoBatalha iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
-    int turnos = 0;
+  public RepositorioResultados iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
+    TurnoList turnos = new TurnoList();
+    int t1ItensUsados = t1.getItensUsados();
+    int t2ItensUsados = t2.getItensUsados();
     boolean vida = true;
     while (vida) {
-      turnos += 2;
+      double t1PokesalHp = t1.getPokesal().getHp();
+      double t2PokesalHp = t2.getPokesal().getHp();
       if (t1
           .getPokesal()
           .getSpd() < t2
           .getPokesal()
           .getSpd()) {
         vida = executarTurno(t2, t1, terreno);
+        boolean t1ItemUsado = t1ItensUsados < t1.getItensUsados();
+        boolean t2ItemUsado = t2ItensUsados < t2.getItensUsados();
+        if(t1ItemUsado){
+          t1ItensUsados = t1.getItensUsados();
+        }
+        if(t2ItemUsado){
+          t2ItensUsados = t2.getItensUsados();
+        }
+        turnos.salvarTurnos(new RegistroBatalha("Ataque basico", t1PokesalHp - t1.getPokesal().getHp(), t1.getPokesal().isEnvenenado(), t2.getPokesal()
+            .getTipo(), t2ItemUsado));
+        turnos.salvarTurnos(new RegistroBatalha("Ataque basico", t2PokesalHp - t2.getPokesal().getHp(), t2.getPokesal().isEnvenenado(), t1.getPokesal()
+            .getTipo(), t1ItemUsado));
       } else {
         vida = executarTurno(t1, t2, terreno);
+        boolean t1ItemUsado = t1ItensUsados < t1.getItensUsados();
+        boolean t2ItemUsado = t2ItensUsados < t2.getItensUsados();
+        if(t1ItemUsado){
+          t1ItensUsados = t1.getItensUsados();
+        }
+        if(t2ItemUsado){
+          t2ItensUsados = t2.getItensUsados();
+        }
+        turnos.salvarTurnos(new RegistroBatalha("Ataque basico", t2PokesalHp - t2.getPokesal().getHp(), t2.getPokesal().isEnvenenado(), t1.getPokesal()
+            .getTipo(), t1ItemUsado));
+        turnos.salvarTurnos(new RegistroBatalha("Ataque basico", t1PokesalHp - t1.getPokesal().getHp(), t1.getPokesal().isEnvenenado(), t2.getPokesal()
+            .getTipo(), t2ItemUsado));
       }
     }
-    return new ResultadoBatalha(vencedor.getNome(), perdedor.getNome(), turnos, vencedor
+    return new RepositorioResultados(vencedor.getNome(), perdedor.getNome(), turnos.getBatalhas(), vencedor
         .getPokesal()
         .getNome(), perdedor
         .getPokesal()

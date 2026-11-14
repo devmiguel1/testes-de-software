@@ -168,6 +168,10 @@ public class Treinador {
     this.itens = itens;
   }
 
+  public int getItensUsados(){
+    return itensUsados;
+  }
+
   public String getNome() {
     return nome;
   }
