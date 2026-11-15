@@ -53,6 +53,8 @@ class TreinadorMockitoTest {
 
         double hpInicial = inimigo.getHp();
 
+        treinador.getPokesal().getGolpe().setPrecisao(0);
+
         when(gerador.gerarAletorio())
                 .thenReturn(0.99);
 

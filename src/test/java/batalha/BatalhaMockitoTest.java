@@ -57,7 +57,7 @@ class BatalhaMockitoTest {
                 .thenReturn(1.0);
 
         when(pokeAtacante.getHp())
-                .thenReturn(100.0);
+                .thenReturn(10.0);
 
         when(pokeAtacante.getHpMax())
                 .thenReturn(100.0);
@@ -69,9 +69,6 @@ class BatalhaMockitoTest {
                 .thenReturn(false);
 
         when(atacante.getItem(0))
-                .thenReturn(null);
-
-        when(defensor.getItem(0))
                 .thenReturn(null);
     }
 
@@ -91,18 +88,21 @@ class BatalhaMockitoTest {
         );
 
         ordem.verify(terreno)
-                .bonus(atacante, defensor);
+            .bonus(atacante, defensor);
 
         ordem.verify(registro)
-                .registrarAtaque(atacante, defensor);
+            .registrarAtaque(atacante, defensor);
 
         ordem.verify(atacante)
-                .ataquePokesal(pokeDefensor, 1.0);
+            .ataquePokesal(pokeDefensor, 1.0);
 
         ordem.verify(registro)
-                .registrarDano(pokeDefensor, 0.0);
+            .registrarDano(pokeDefensor, 0.0);
 
         ordem.verify(terreno)
-                .efeitoFimDeTurno(pokeAtacante);
+            .efeitoFimDeTurno(pokeAtacante);
+
+        ordem.verify(atacante).getItem(0);
+
     }
 }

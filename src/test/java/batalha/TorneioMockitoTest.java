@@ -48,12 +48,6 @@ class TorneioMockitoTest {
 
     @BeforeEach
     void setUp() {
-
-        when(t1.getNome()).thenReturn("Eduardo");
-        when(t2.getNome()).thenReturn("Miguel");
-        when(t3.getNome()).thenReturn("Lucas");
-        when(t4.getNome()).thenReturn("Pedro");
-
         participantes = Arrays.asList(t1, t2, t3, t4);
     }
 
@@ -72,6 +66,9 @@ class TorneioMockitoTest {
     }
 
     private void configurarBatalhas() {
+
+        when(t1.getNome()).thenReturn("Eduardo");
+        when(t3.getNome()).thenReturn("Lucas");
 
         when(batalha.iniciarBatalha(eq(t1), eq(t2), any(Terreno.class)))
                 .thenReturn(resultado("Eduardo", "Miguel", 4));
