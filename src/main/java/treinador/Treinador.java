@@ -2,6 +2,7 @@ package treinador;
 
 import itens.Item;
 import pokesal.Pokesal;
+import pokesal.enums.TipoElemental;
 
 /**
  * Representa um treinador que participa das batalhas.
@@ -11,6 +12,8 @@ import pokesal.Pokesal;
  * características do seu Pokesal.</p>
  */
 public class Treinador {
+  private static final double MULTIPLICADOR_CRITICO = 1.5;
+
   private final GeradorAleatorioInterface gerador;
   private String nome;
   private Pokesal pokesal;
@@ -102,13 +105,17 @@ public class Treinador {
       return;
     }
 
-    double dano = Math.max(1, pokesal.getAtk() * bonus) - inimigo.getDef();
+    double dano = Math.max(1, pokesal.getAtk() * bonus - inimigo.getDef());
 
     if (gerador.gerarAletorio() < pokesal.getCritico()) {
       System.out.println("Acertou um ataque critico");
-      dano = dano * 1.5;
+      dano = dano * MULTIPLICADOR_CRITICO;
     }
     inimigo.setHp(inimigo.getHp() - dano);
+
+    if (pokesal.getTipo() == TipoElemental.PLANTA) {
+      inimigo.setEnvenenado(true);
+    }
   }
 
   /**

@@ -103,7 +103,8 @@ public class BatalhaTest {
     ServicoRecompensa servicoRecompensa = new ServicoRecompensa(() -> 0);
     ServicoNotificacao servicoNotificacao = new ServicoNotificacao(resultado -> {
     });
-    Batalha batalha = new Batalha(servicoRecompensa, servicoNotificacao);
+    Batalha batalha = new Batalha(servicoRecompensa, servicoNotificacao,
+        new RegistroBatalhaConsole());
     terreno.setTerreno(TipoTerreno.CANTEIRO_CENTRAL);
 
     t1

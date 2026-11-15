@@ -1,12 +1,14 @@
 package batalha;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * Armazena os resultados das batalhas do torneio.
+ */
+public interface RepositorioResultados {
 
-public class RepositorioResultados {
-  public List<ResultadoBatalha> batalhas = new ArrayList<ResultadoBatalha>();
-
-  public void salvarResultado(ResultadoBatalha resultado) {
-    batalhas.add(resultado);
-  }
+  /**
+   * Salva o resultado de uma batalha.
+   *
+   * @param resultado resultado a ser salvo
+   */
+  void salvarResultado(ResultadoBatalha resultado);
 }

@@ -11,6 +11,9 @@ import pokesal.enums.TipoElemental;
  * o estado de envenenamento.</p>
  */
 public abstract class Pokesal {
+  /** Chance base de acerto crítico, em porcentagem (regra 2.1). */
+  public static final double CHANCE_CRITICO_BASE = 6.25;
+
   private String nome;
   private double hp;
   private double hpMax;
@@ -20,7 +23,7 @@ public abstract class Pokesal {
   private double def;
   private double spd;
   private double desvio = 5;
-  private double critico = 6.25;
+  private double critico = CHANCE_CRITICO_BASE;
   private TipoElemental tipo;
   private boolean envenenado;
   private Golpe golpe;

@@ -1,30 +1,36 @@
 package batalha;
 
-import java.util.Scanner;
+import pokesal.Pokesal;
 import treinador.Treinador;
 
 /**
  * Representa e gerencia uma batalha entre dois treinadores.
  *
- * <p>Controla a ordem dos turnos, os ataques, o uso de itens,
- * a aplicação do bônus do terreno e a verificação das condições
+ * <p>Controla a ordem dos turnos, os ataques, os efeitos de status
+ * e de terreno, o uso de itens e a verificação das condições
  * de vitória e derrota.</p>
  */
 public class Batalha {
 
+  /** Fração do HP máximo perdida a cada turno por um Pokésal envenenado. */
+  private static final double DANO_VENENO = 1.0 / 16;
+
   private final ServicoRecompensa servicoRecompensa;
   private final ServicoNotificacao servicoNotificacao;
+  private final RegistroBatalha registro;
 
   /**
-   * Cria uma batalha com os serviços de recompensa e notificação.
+   * Cria uma batalha com os serviços de recompensa, notificação e registro.
    *
    * @param servicoRecompensa  serviço que concede pontos ao vencedor
    * @param servicoNotificacao serviço que notifica o resultado da batalha
+   * @param registro           registro dos eventos de cada turno
    */
   public Batalha(ServicoRecompensa servicoRecompensa,
-                 ServicoNotificacao servicoNotificacao) {
+      ServicoNotificacao servicoNotificacao, RegistroBatalha registro) {
     this.servicoRecompensa = servicoRecompensa;
     this.servicoNotificacao = servicoNotificacao;
+    this.registro = registro;
   }
 
   /**
@@ -42,25 +48,20 @@ public class Batalha {
    */
   public ResultadoBatalha iniciarBatalha(Treinador t1, Treinador t2, Terreno terreno) {
     int turnos = 0;
-    boolean vida = true;
+    boolean continua = true;
 
-    while (vida) {
+    while (continua) {
       turnos += 2;
-      if (t1
-          .getPokesal()
-          .getSpd() < t2
-          .getPokesal()
-          .getSpd()) {
-        vida = executarTurno(t2, t1, terreno);
+      if (t1.getPokesal().getSpd() < t2.getPokesal().getSpd()) {
+        continua = executarTurno(t2, t1, terreno);
       } else {
-        vida = executarTurno(t1, t2, terreno);
+        continua = executarTurno(t1, t2, terreno);
       }
     }
 
-    Treinador vencedor = t1
-        .getPokesal()
-        .getHp() > 0 ? t1 : t2;
+    Treinador vencedor = t1.getPokesal().getHp() > 0 ? t1 : t2;
     Treinador perdedor = vencedor == t1 ? t2 : t1;
+    System.out.println(vencedor.getNome() + " ganhou a batalha!");
 
     int pontos = servicoRecompensa.concederRecompensa(vencedor);
     System.out.println(vencedor.getNome() + " recebeu " + pontos + " pontos de recompensa!");
@@ -69,12 +70,8 @@ public class Batalha {
         vencedor.getNome(),
         perdedor.getNome(),
         turnos,
-        vencedor
-            .getPokesal()
-            .getNome(),
-        perdedor
-            .getPokesal()
-            .getNome());
+        vencedor.getPokesal().getNome(),
+        perdedor.getPokesal().getNome());
 
     servicoNotificacao.notificar(resultado);
 
@@ -82,133 +79,80 @@ public class Batalha {
   }
 
   /**
-   * Executa um turno completo da batalha entre dois treinadores.
+   * Executa um turno completo: o primeiro treinador age e, se o
+   * adversário continuar de pé, o segundo treinador age.
    *
-   * <p>Antes de cada ataque, verifica se o treinador precisa
-   * utilizar uma Potion. Em seguida, realiza o ataque e verifica
-   * se o treinador defensor foi derrotado. Caso nenhum treinador
-   * seja derrotado, o segundo treinador também realiza seu ataque.</p>
-   *
-   * @param t1      treinador que realiza o primeiro ataque
-   * @param t2      treinador que recebe o primeiro ataque
-   * @param terreno terreno utilizado para calcular o bônus do ataque
+   * @param t1      treinador que age primeiro
+   * @param t2      treinador que age em seguida
+   * @param terreno terreno utilizado durante a batalha
    * @return {@code false} quando um dos treinadores é derrotado,
-   * ou {@code true} quando a batalha deve continuar
+   *     ou {@code true} quando a batalha deve continuar
    */
   public boolean executarTurno(Treinador t1, Treinador t2, Terreno terreno) {
-    curarSeNecessario(t1);
-    ataqueTurno(t1, t2, terreno);
-    if (t2
-        .getPokesal()
-        .getHp() <= 0) {
-      System.out.println(t2
-          .getPokesal()
-          .getNome() + " nao aguentou mais!");
-      System.out.println(t1.getNome() + " ganhou a batalha!");
+    turnoDoTreinador(t1, t2, terreno);
+    if (t2.getPokesal().getHp() <= 0) {
       return false;
     }
 
-    curarSeNecessario(t2);
-    ataqueTurno(t2, t1, terreno);
-    if (t1
-        .getPokesal()
-        .getHp() <= 0) {
-      System.out.println(t1
-          .getPokesal()
-          .getNome() + " nao aguentou mais!");
-      System.out.println(t2.getNome() + " ganhou a batalha!");
-      return false;
-    }
-
-    return true;
+    turnoDoTreinador(t2, t1, terreno);
+    return t1.getPokesal().getHp() > 0;
   }
 
   /**
-   * Permite que o treinador escolha um item da lista de itens
-   * para ser utilizado durante a batalha.
+   * Executa a vez de um treinador, na ordem exigida pela regra 2.4:
+   * ataque, dano, efeito de status, efeito de terreno e uso de item.
    *
-   * @param treinador treinador que irá escolher e utilizar o item
-   */
-  private void escolhaItem(Treinador treinador) {
-    Scanner sc = new Scanner(System.in);
-    treinador.listarItens();
-
-    System.out.println("Ecolha o Item: ");
-    int escolha = Integer.parseInt(sc
-        .nextLine()
-        .trim());
-    treinador.usarItem(escolha - 1);
-  }
-
-  /**
-   * Executa o ataque de um treinador contra outro.
-   *
-   * <p>Primeiro calcula o bônus fornecido pelo terreno e registra
-   * o HP do defensor antes do ataque. Depois realiza o ataque,
-   * calcula o dano causado e exibe as informações do ataque
-   * e do HP restante.</p>
-   *
-   * @param atacante treinador responsável por realizar o ataque
+   * @param atacante treinador que realiza o ataque
    * @param defensor treinador que recebe o ataque
-   * @param terreno  terreno utilizado para calcular o bônus do ataque
+   * @param terreno  terreno utilizado durante a batalha
    */
-  private void ataqueTurno(Treinador atacante, Treinador defensor, Terreno terreno) {
+  private void turnoDoTreinador(Treinador atacante, Treinador defensor, Terreno terreno) {
+    Pokesal alvo = defensor.getPokesal();
+
+    // 1. Ataque
     double bonus = terreno.bonus(atacante, defensor);
-    double hpAntes = defensor
-        .getPokesal()
-        .getHp();
+    double hpAntes = alvo.getHp();
+    registro.registrarAtaque(atacante, defensor);
+    atacante.ataquePokesal(alvo, bonus);
 
-    System.out.println(atacante
-        .getPokesal()
-        .getNome() + " atacou " + defensor
-        .getPokesal()
-        .getNome());
-    atacante.ataquePokesal(defensor.getPokesal(), bonus);
+    // 2. Dano
+    registro.registrarDano(alvo, hpAntes - alvo.getHp());
 
-    double dano = hpAntes - defensor
-        .getPokesal()
-        .getHp();
-    System.out.printf("dano: %.2f %n", dano);
-    System.out.printf("HP de %s: %.2f%n", defensor
-        .getPokesal()
-        .getNome(), defensor
-        .getPokesal()
-        .getHp());
-    System.out.println();
+    // 3. Efeito de status
+    if (alvo.isEnvenenado() && alvo.getHp() > 0) {
+      alvo.setHp(alvo.getHp() - alvo.getHpMax() * DANO_VENENO);
+      registro.registrarEfeitoStatus(alvo, "dano de veneno");
+    }
+
+    // 4. Efeito de terreno
+    Pokesal proprio = atacante.getPokesal();
+    double hpAntesTerreno = proprio.getHp();
+    terreno.efeitoFimDeTurno(proprio);
+    if (proprio.getHp() != hpAntesTerreno) {
+      registro.registrarEfeitoTerreno(proprio, "recuperou HP no terreno");
+    }
+
+    // 5. Uso de item
+    curarSeNecessario(atacante);
   }
 
   /**
-   * Verifica se o Pokésal do treinador precisa ser curado.
-   *
-   * <p>A cura é realizada quando o HP atual é maior que zero
-   * e menor ou igual à metade do HP máximo. Nesse caso, o método
-   * tenta utilizar o primeiro item disponível. Caso o item não
-   * possa ser utilizado, a mensagem da exceção é exibida.</p>
+   * Usa o primeiro item do treinador quando o HP do Pokésal está
+   * entre zero e a metade do HP máximo.
    *
    * @param treinador treinador que terá o HP verificado
    */
   private void curarSeNecessario(Treinador treinador) {
-    double metade = treinador
-        .getPokesal()
-        .getHpMax() / 2;
-    if (treinador
-        .getPokesal()
-        .getHp() > 0 && treinador
-        .getPokesal()
-        .getHp() <= metade) {
-      try {
-        treinador.usarItem(0);
-        System.out.println(treinador.getNome() + " usou uma Potion em " + treinador
-            .getPokesal()
-            .getNome());
-        System.out.printf("HP de %s agora: %.2f%n", treinador
-            .getPokesal()
-            .getNome(), treinador
-            .getPokesal()
-            .getHp());
-      } catch (IllegalStateException e) {
-        System.out.println(e.getMessage());
-      }
+    Pokesal pokesal = treinador.getPokesal();
+    boolean precisaCurar = pokesal.getHp() > 0 && pokesal.getHp() <= pokesal.getHpMax() / 2;
+    if (!precisaCurar || treinador.getItem(0) == null) {
+      return;
+    }
+    try {
+      treinador.usarItem(0);
+      registro.registrarUsoItem(treinador, treinador.getItem(0).getNome());
+    } catch (IllegalStateException e) {
+      System.out.println(e.getMessage());
     }
   }
 }

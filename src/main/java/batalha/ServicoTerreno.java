@@ -22,7 +22,7 @@ public class ServicoTerreno {
 
         LocalTime horario = LocalTime.now(clock);
 
-        boolean duranteODia = horario.isAfter(LocalTime.of(6, 0))
+        boolean duranteODia = !horario.isBefore(LocalTime.of(6, 0))
                 && horario.isBefore(LocalTime.of(18, 0));
 
         if (terreno == TipoTerreno.ASFALTO_QUENTE

@@ -1,29 +1,37 @@
 package batalha;
 
+/**
+ * Resultado de uma batalha: vencedor, perdedor, número de turnos
+ * e Pokésal utilizados.
+ */
 public class ResultadoBatalha {
-  private String vencedor;
-  private String perdedor;
-  private int turnos;
-  private String pokesalVencedor;
-  private String pokesalPerdedor;
-  private static String erro;
+  private final String vencedor;
+  private final String perdedor;
+  private final int turnos;
+  private final String pokesalVencedor;
+  private final String pokesalPerdedor;
 
+  /**
+   * Cria o resultado de uma batalha.
+   *
+   * @param vencedor        nome do treinador vencedor
+   * @param perdedor        nome do treinador perdedor
+   * @param turnos          número de turnos da batalha
+   * @param pokesalVencedor nome do Pokésal do vencedor
+   * @param pokesalPerdedor nome do Pokésal do perdedor
+   * @throws IllegalArgumentException se algum nome for nulo
+   */
   public ResultadoBatalha(String vencedor, String perdedor, int turnos, String pokesalVencedor,
-                          String pokesalPerdedor) {
-    if (vencedor == null || perdedor == null || pokesalVencedor == null ||
-        pokesalPerdedor == null) {
-      erro = "Houve um erro no registro da batlha entre " + vencedor + " e " + perdedor;
-    } else {
-      this.vencedor = vencedor;
-      this.perdedor = perdedor;
-      this.turnos = turnos;
-      this.pokesalVencedor = pokesalVencedor;
-      this.pokesalPerdedor = pokesalPerdedor;
+      String pokesalPerdedor) {
+    if (vencedor == null || perdedor == null || pokesalVencedor == null
+        || pokesalPerdedor == null) {
+      throw new IllegalArgumentException("Resultado de batalha com dados nulos");
     }
-  }
-
-  public static String getErro() {
-    return erro;
+    this.vencedor = vencedor;
+    this.perdedor = perdedor;
+    this.turnos = turnos;
+    this.pokesalVencedor = pokesalVencedor;
+    this.pokesalPerdedor = pokesalPerdedor;
   }
 
   public String getVencedor() {
@@ -46,11 +54,9 @@ public class ResultadoBatalha {
     return pokesalPerdedor;
   }
 
-  public void getRegistro() {
-    System.out.println("Vencedor: " + vencedor);
-    System.out.println("Perdedor: " + perdedor);
-    System.out.println("Turnos: " + turnos);
-    System.out.println("Pokesal do vencedor: " + pokesalVencedor);
-    System.out.println("Pokesal do perdedor: " + pokesalPerdedor);
+  @Override
+  public String toString() {
+    return "Vencedor: " + vencedor + " (" + pokesalVencedor + ") | Perdedor: "
+        + perdedor + " (" + pokesalPerdedor + ") | Turnos: " + turnos;
   }
 }
