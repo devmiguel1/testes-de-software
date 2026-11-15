@@ -54,11 +54,11 @@ public class Main {
         new Item[] {new Potion(10), new Potion(10)});
     t2.escolhaDePerk(2);
 
-    Treinador t3 = new Treinador(gerador, "Cristo", new BulbaSal(),
+    Treinador t3 = new Treinador(gerador, "Ash", new BulbaSal(),
         new Item[] {new Potion(10), new Potion(10)});
     t3.escolhaDePerk(3);
 
-    Treinador t4 = new Treinador(gerador, "Judas", new TotoSal(),
+    Treinador t4 = new Treinador(gerador, "Misty", new TotoSal(),
         new Item[] {new Potion(10), new Potion(10)});
     t4.escolhaDePerk(1);
 
@@ -72,9 +72,7 @@ public class Main {
 
     // Resultados salvos no repositório
     System.out.println("\n--- RESULTADOS ---");
-    repositorio
-        .getResultados()
-        .forEach(System.out::println);
+    repositorio.getResultados().forEach(System.out::println);
     System.out.println("Campeão: " + campeao.getNome());
 
     // Exibição da pontuação dos treinadores

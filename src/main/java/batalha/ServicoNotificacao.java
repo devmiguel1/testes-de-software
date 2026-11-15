@@ -18,4 +18,4 @@ public class ServicoNotificacao {
 
     notificador.notificarResultado(resultado);
   }
-}
+}

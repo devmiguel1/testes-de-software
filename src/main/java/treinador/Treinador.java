@@ -191,7 +191,11 @@ public class Treinador {
     this.pokesal = pokesal;
   }
 
+  public int getItensUsados() {
+    return itensUsados;
+  }
+
   public int getPontos() {
     return pontos;
   }
-}
+}

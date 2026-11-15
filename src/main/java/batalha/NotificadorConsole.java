@@ -19,4 +19,4 @@ public class NotificadorConsole implements NotificadorBatalha {
     System.out.println("Pokesal perdedor: " + resultado.getPokesalPerdedor());
     System.out.println("==================================");
   }
-}
+}
