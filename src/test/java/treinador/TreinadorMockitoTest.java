@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import pokesal.CharSal;
 import pokesal.Pokesal;
+import pokesal.enums.TipoElemental;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -24,9 +25,9 @@ class TreinadorMockitoTest {
     @BeforeEach
     void setUp() {
         treinador = new Treinador(
-                gerador,
-                "Eduardo",
-                new CharSal()
+            gerador,
+            "Eduardo",
+            new CharSal()
         );
 
         inimigo = new CharSal();
@@ -36,7 +37,7 @@ class TreinadorMockitoTest {
     void testAcertoCriticoComGeradorMockado() {
 
         when(gerador.gerarAletorio())
-                .thenReturn(0.0, 0.0);
+            .thenReturn(0.0, 0.0);
 
         treinador.ataquePokesal(inimigo, 1.0);
 
@@ -56,12 +57,28 @@ class TreinadorMockitoTest {
         treinador.getPokesal().getGolpe().setPrecisao(0);
 
         when(gerador.gerarAletorio())
-                .thenReturn(0.99);
+            .thenReturn(0.99);
 
         treinador.ataquePokesal(inimigo, 1.0);
 
         assertEquals(hpInicial, inimigo.getHp(), 0.001);
 
         verify(gerador, times(1)).gerarAletorio();
+    }
+
+    @Test
+    void testAtaqueDePlantaEnvenenaOInimigo() {
+
+        treinador.getPokesal().setTipo(TipoElemental.PLANTA);
+
+        // Primeiro valor: acerta o golpe. Segundo valor: sem crítico.
+        when(gerador.gerarAletorio())
+            .thenReturn(0.0, 99.0);
+
+        treinador.ataquePokesal(inimigo, 1.0);
+
+        assertTrue(inimigo.isEnvenenado());
+
+        verify(gerador, times(2)).gerarAletorio();
     }
 }

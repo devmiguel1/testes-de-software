@@ -1,24 +1,35 @@
 package treinador;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import itens.Item;
+import itens.Potion;
 import pokesal.CharSal;
 import pokesal.Pokesal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class TreinadorTest {
+
   private final GeradorAleatorio gerador = new GeradorAleatorio();
   private Pokesal pokesal;
   private Treinador treinador;
 
   @BeforeEach
   void setUp() {
+
     pokesal = new CharSal();
-    treinador = new Treinador(gerador, "Ronaldo", pokesal);
+
+    treinador = new Treinador(
+        gerador,
+        "Ronaldo",
+        pokesal
+    );
   }
 
   @ParameterizedTest
@@ -52,10 +63,10 @@ class TreinadorTest {
     assertEquals(pokesal.getAtk(), pokesal.getAtkMax());
   }
 
-
   @Test
   @DisplayName("Perk 1 deve aumentar o crítico em 10")
   void testeCritico() {
+
     double criticoInicial = pokesal.getCritico();
 
     treinador.escolhaDePerk(1);
@@ -66,6 +77,7 @@ class TreinadorTest {
   @Test
   @DisplayName("Perk 2 deve aumentar o desvio em 5")
   void testeDesvio() {
+
     double desvioInicial = pokesal.getDesvio();
 
     treinador.escolhaDePerk(2);
@@ -76,10 +88,47 @@ class TreinadorTest {
   @Test
   @DisplayName("Perk 3 deve aumentar a defesa em 5")
   void testeDefesa() {
+
     double defesaInicial = pokesal.getDef();
 
     treinador.escolhaDePerk(3);
 
     assertEquals(defesaInicial + 5, pokesal.getDef());
+  }
+
+  @Test
+  @DisplayName("Pontos negativos devem lançar exceção e não alterar a pontuação")
+  void pontosNegativos() {
+
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> treinador.adicionarPontos(-1)
+    );
+
+    assertEquals(0, treinador.getPontos());
+  }
+
+  @Test
+  @DisplayName("Não deve permitir usar mais de dois itens na batalha")
+  void limiteDeItens() {
+
+    Item[] itens = {new Potion(10), new Potion(10)};
+
+    Treinador comItens = new Treinador(
+        gerador,
+        "Ronaldo",
+        pokesal,
+        itens
+    );
+
+    comItens.usarItem(0);
+    comItens.usarItem(1);
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> comItens.usarItem(0)
+    );
+
+    assertEquals(2, comItens.getItensUsados());
   }
 }

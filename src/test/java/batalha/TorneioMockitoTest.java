@@ -1,6 +1,6 @@
-
 package batalha;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,16 +52,16 @@ class TorneioMockitoTest {
     }
 
     private ResultadoBatalha resultado(
-            String vencedor,
-            String perdedor,
-            int turnos
+        String vencedor,
+        String perdedor,
+        int turnos
     ) {
         return new ResultadoBatalha(
-                vencedor,
-                perdedor,
-                turnos,
-                "CharSal",
-                "CharSal"
+            vencedor,
+            perdedor,
+            turnos,
+            "CharSal",
+            "CharSal"
         );
     }
 
@@ -71,13 +71,13 @@ class TorneioMockitoTest {
         when(t3.getNome()).thenReturn("Lucas");
 
         when(batalha.iniciarBatalha(eq(t1), eq(t2), any(Terreno.class)))
-                .thenReturn(resultado("Eduardo", "Miguel", 4));
+            .thenReturn(resultado("Eduardo", "Miguel", 4));
 
         when(batalha.iniciarBatalha(eq(t3), eq(t4), any(Terreno.class)))
-                .thenReturn(resultado("Lucas", "Pedro", 6));
+            .thenReturn(resultado("Lucas", "Pedro", 6));
 
         when(batalha.iniciarBatalha(eq(t1), eq(t3), any(Terreno.class)))
-                .thenReturn(resultado("Eduardo", "Lucas", 8));
+            .thenReturn(resultado("Eduardo", "Lucas", 8));
     }
 
     @Test
@@ -88,13 +88,13 @@ class TorneioMockitoTest {
         torneio.executar(participantes);
 
         ArgumentCaptor<ResultadoBatalha> captor =
-                ArgumentCaptor.forClass(ResultadoBatalha.class);
+            ArgumentCaptor.forClass(ResultadoBatalha.class);
 
         verify(repositorio, times(3))
-                .salvarResultado(captor.capture());
+            .salvarResultado(captor.capture());
 
         List<ResultadoBatalha> resultados =
-                captor.getAllValues();
+            captor.getAllValues();
 
         ResultadoBatalha primeiro = resultados.get(0);
 
@@ -109,33 +109,33 @@ class TorneioMockitoTest {
         configurarBatalhas();
 
         doThrow(new IllegalStateException("Erro no banco"))
-                .when(repositorio)
-                .salvarResultado(any(ResultadoBatalha.class));
+            .when(repositorio)
+            .salvarResultado(any(ResultadoBatalha.class));
 
         Treinador campeao = torneio.executar(participantes);
 
         assertSame(t1, campeao);
 
         verify(repositorio, atLeastOnce())
-                .salvarResultado(any(ResultadoBatalha.class));
+            .salvarResultado(any(ResultadoBatalha.class));
     }
 
     @Test
     void testRepositorioNaoChamadoSeBatalhaNaoTerminou() {
 
         when(batalha.iniciarBatalha(
-                eq(t1),
-                eq(t2),
-                any(Terreno.class)
+            eq(t1),
+            eq(t2),
+            any(Terreno.class)
         )).thenThrow(new IllegalStateException("Batalha interrompida"));
 
         assertThrows(
-                IllegalStateException.class,
-                () -> torneio.executar(participantes)
+            IllegalStateException.class,
+            () -> torneio.executar(participantes)
         );
 
         verify(repositorio, never())
-                .salvarResultado(any(ResultadoBatalha.class));
+            .salvarResultado(any(ResultadoBatalha.class));
     }
 
     @Test
@@ -154,10 +154,38 @@ class TorneioMockitoTest {
         verify(batalha).iniciarBatalha(t1, t3, terreno);
 
         verify(batalha, times(3))
-                .iniciarBatalha(
-                        any(Treinador.class),
-                        any(Treinador.class),
-                        eq(terreno)
-                );
+            .iniciarBatalha(
+                any(Treinador.class),
+                any(Treinador.class),
+                eq(terreno)
+            );
+    }
+
+    @Test
+    void testTorneioComOitoParticipantesAvancaSegundoColocado() {
+
+        List<Treinador> oito = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            oito.add(mock(Treinador.class));
+        }
+
+        // Os treinadores mockados não têm nome, então o vencedor
+        // informado nunca coincide com o primeiro do par: o segundo avança.
+        when(batalha.iniciarBatalha(
+            any(Treinador.class),
+            any(Treinador.class),
+            any(Terreno.class)
+        )).thenReturn(resultado("Outro", "Fulano", 4));
+
+        Treinador campeao = torneio.executar(oito);
+
+        assertSame(oito.get(7), campeao);
+
+        verify(batalha, times(7))
+            .iniciarBatalha(
+                any(Treinador.class),
+                any(Treinador.class),
+                eq(terreno)
+            );
     }
 }
